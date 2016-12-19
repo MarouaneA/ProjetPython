@@ -1,19 +1,18 @@
 __author__ = 'aatefma'
 import math
 import lect_fichier
+import configuration
 
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QWheelEvent
 
-RUN_COLOR = 'red'
-STRATLOG_COLOR = 'blue'
-ASSIGNMENT_COLOR = 'green'
-SUPERVISED_RECORD_START_COLOR = 'black'
-MODEL_NUM_COLOR = 'brown'
-TRAIN_START_COLOR = 'orange'
-TRAIN_STOP_COLOR = 'purple'
 
+COLORS = ['red', 'orange', 'blue', 'green', 'magenta', 'cyan', 'lime', 'purple', 'silver', 'indigo', 'maroon',
+          'olive', 'navy', 'goldenrod', 'teal', 'darkorange' 'crimson', 'seagreen', 'steelblue', 'lightcoral',
+          'grey', 'black', 'orangered']
+
+n = len(COLORS)
 
 class View(QtWidgets.QWidget):
 
@@ -62,56 +61,10 @@ class View(QtWidgets.QWidget):
             button = QtWidgets.QPushButton(text)
             button.clicked.connect(slot)
             vbox.addWidget(button)
-        add_button("one view", lambda : self.draw_one_timeline())
         add_button ("split view", lambda: self.draw_timeline())
         label_4 = QtWidgets.QLabel()
         label_4.setFrameShape(QtWidgets.QFrame.NoFrame)
         label_4.setObjectName("label_4")
-    def draw_one_timeline(self):
-        self.scene.clear()
-        timeline_group = QtWidgets.QGraphicsItemGroup()
-        self.scene.addItem(timeline_group)
-        timeline_group.setZValue(0)
-        pen = QtGui.QPen(QtCore.Qt.transparent)
-        width = 50
-        i = 0
-        t_0 = self.action[0].time
-        t_f = self.action[-1].time
-        inter= (t_f - t_0)/3000
-        for point in self.action:
-            if point.action == 'START_RUN':
-                brush = QtGui.QBrush(QtGui.QColor(RUN_COLOR))
-                xys = ((point.time-t_0)/inter), 0
-                item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'ASSIGNMENT_STARTED':
-                brush = QtGui.QBrush(QtGui.QColor(ASSIGNMENT_COLOR))
-                xys =(point.time-t_0)/inter, 0
-                item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'SUPERVISED_RECORD_START':
-                brush = QtGui.QBrush(QtGui.QColor(SUPERVISED_RECORD_START_COLOR))
-                xys = (point.time-t_0)/inter,0
-                item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'MODEL_NUM=0':
-                brush = QtGui.QBrush(QtGui.QColor(MODEL_NUM_COLOR))
-                xys = (point.time-t_0)/inter, 0
-                item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'TRAIN_START':
-                brush = QtGui.QBrush(QtGui.QColor(TRAIN_START_COLOR))
-                xys = (point.time-t_0)/inter, 0
-                item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'TRAIN_FINISHED':
-                brush = QtGui.QBrush(QtGui.QColor(TRAIN_STOP_COLOR))
-                xys = (point.time-t_0)/inter, 0
-                item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-            else:
-                brush = QtGui.QBrush(QtGui.QColor('BLUE'))
-                xys = (point.time-t_0)/inter, 0
-                item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-            i += 1
-            item.setPen(pen)
-            item.setBrush(brush)
-            item.setToolTip(point.action+' '+ point.arg)
-
 
     def draw_timeline(self):
         self.scene.clear()
@@ -119,44 +72,28 @@ class View(QtWidgets.QWidget):
         self.scene.addItem(timeline_group)
         timeline_group.setZValue(0)
         pen = QtGui.QPen(QtCore.Qt.transparent)
-        width = 20
-        i = 0
+        width = 30
+        i = 720
         t_0 = self.action[0].time
         t_f = self.action[-1].time
-        inter= (t_f - t_0)/900
+        inter= (t_f - t_0)/2000
+        dict =  {}
         for point in self.action:
-            if point.action == 'START_RUN':
-                brush = QtGui.QBrush(QtGui.QColor(RUN_COLOR))
-                xys = ((point.time-t_0)/inter), 540
+            if point.action not in dict:
+                dict[point.action] = i
+                brush = QtGui.QBrush(QtGui.QColor(COLORS[i % n]))
+                xys = ((point.time - t_0) / inter), dict[point.action]
                 item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'ASSIGNMENT_STARTED':
-                brush = QtGui.QBrush(QtGui.QColor(ASSIGNMENT_COLOR))
-                xys =(point.time-t_0)/inter, 720
-                item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'SUPERVISED_RECORD_START':
-                brush = QtGui.QBrush(QtGui.QColor(SUPERVISED_RECORD_START_COLOR))
-                xys = (point.time-t_0)/inter, 360
-                item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'MODEL_NUM=0':
-                brush = QtGui.QBrush(QtGui.QColor(MODEL_NUM_COLOR))
-                xys = (point.time-t_0)/inter, 180
-                item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'TRAIN_START':
-                brush = QtGui.QBrush(QtGui.QColor(TRAIN_START_COLOR))
-                xys = (point.time-t_0)/inter, 0
-                item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-            elif point.action == 'TRAIN_FINISHED':
-                brush = QtGui.QBrush(QtGui.QColor(TRAIN_STOP_COLOR))
-                xys = (point.time-t_0)/inter, -180
-                item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                i -= 60
             else:
-                brush = QtGui.QBrush(QtGui.QColor('BLUE'))
-                xys = (point.time-t_0)/inter, -360
+                brush = QtGui.QBrush(QtGui.QColor(COLORS[dict[point.action] % n]))
+                xys = ((point.time - t_0) / inter), dict[point.action]
                 item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-            i += 1
             item.setPen(pen)
             item.setBrush(brush)
             item.setToolTip(point.action+' '+ point.arg)
+
+
 
 
 

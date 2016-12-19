@@ -1,8 +1,6 @@
-__author__ = 'bruyasgh'
 
-COLORS = ['red', 'orange', 'blue', 'green', 'magenta', 'cyan', 'lime', 'purple', 'silver', 'indigo', 'maroon',
-          'olive', 'navy', 'goldenrod', 'teal', 'darkorange' 'crimson', 'seagreen', 'steelblue', 'lightcoral',
-          'grey', 'black', 'orangered']
+
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
