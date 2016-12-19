@@ -72,6 +72,7 @@ class View(QtWidgets.QWidget):
         self.scene.addItem(timeline_group)
         timeline_group.setZValue(0)
         pen = QtGui.QPen(QtCore.Qt.transparent)
+        line_pen = QtGui.QPen(QtGui.QColor("black"))
         width = 30
         i = 720
         t_0 = self.action[0].time
@@ -92,6 +93,8 @@ class View(QtWidgets.QWidget):
             item.setPen(pen)
             item.setBrush(brush)
             item.setToolTip(point.action+' '+ point.arg)
+
+
 
 
 

@@ -7,10 +7,6 @@ import sys
 import lect_fichier
 
 
-DONNEE_1 = 'essai_donnees.txt'
-DONNEE_2 = 'essai_donnees_2.txt'
-
-
 class Ui_MainWindow(object):
 
     def __init__(self, act):
@@ -36,7 +32,7 @@ class Ui_MainWindow(object):
             chkbx.toggle()  # initialise l'état de la Checkbox à 'sélectionnée'
             # state (1er argument) : argument obligatoire de la méthode stateChanged + nécessité de mettre chkbx=chkbx
             # sinon la fonction n'évalue que le dernier de la boucle 'for' ( il faut définir des variables indépendantes)
-            chkbx.stateChanged.connect(lambda state=0,chkbx=chkbx : self.affichage(state,chkbx))
+            chkbx.stateChanged.connect(lambda state=0,chkbx=chkbx : self.dict_evnt(state,chkbx))
             self.list_chkbx.append(chkbx)
             self.verticalLayout.addWidget(chkbx)
 
@@ -67,6 +63,15 @@ class Ui_MainWindow(object):
             # state = 2
             print(evnt.text()+" is selected")
 
+    def dict_evnt(self, state, evnt):
+        dict = {}
+        if state == 0 :
+            dict[evnt.text()] = "deselected"
+        else :
+            dict[evnt.text()] = "selected"
+        print(dict)
+
+
 
 def list_action(act):
     L = []
@@ -75,12 +80,11 @@ def list_action(act):
             L.append(point.action)
     return(L)
 
-#print(list_action(lect_fichier.load_actions(DONNEE_1)))
 #['STARTLOG', 'ASSIGNMENT_STARTED', 'NEW_PROJECT_STARTED', 'INPUT_GROUP_UPDATE', 'OUTPUT_GROUP_UPDATE', 'SUPERVISED_LEARNING_START', 'MODEL_BUILDER_UPDATED', 'SUPERVISED_DELETE_ALL_EXAMPLES', 'SUPERVISED_RECORD_START', 'TRAIN_START', 'TRAIN_FINISHED', 'MODEL_NUM=0', 'SUPERVISED_RECORD_STOP', 'START_RUN', 'RUN_STOP', 'DELETE_LAST_ROUND', 'PATH_EDITED', 'MODEL_EDITED_OLD', 'MODEL_EDITED_NEW', 'MODEL_TO_CONSOLE', 'STOPLOG']
 
 
 if __name__ == "__main__":
-    act = lect_fichier.load_actions(DONNEE_1)
+    act = lect_fichier.load_actions("essai_donnees.txt")
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow(act)
