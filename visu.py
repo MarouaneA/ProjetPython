@@ -19,7 +19,8 @@ class View(QtWidgets.QWidget):
     def __init__(self, act):
         super(View, self).__init__()
         self.setWindowTitle('Timeline')
-        self.action = act
+        self.act = act
+        self.sel = self.select()
         self.grview = None
         self.scene = None
         self.entry = None
@@ -75,24 +76,33 @@ class View(QtWidgets.QWidget):
         line_pen = QtGui.QPen(QtGui.QColor("black"))
         width = 30
         i = 720
-        t_0 = self.action[0].time
-        t_f = self.action[-1].time
+        t_0 = self.act[0].time
+        t_f = self.act[-1].time
         inter= (t_f - t_0)/2000
-        dict =  {}
-        for point in self.action:
-            if point.action not in dict:
-                dict[point.action] = i
-                brush = QtGui.QBrush(QtGui.QColor(COLORS[i % n]))
-                xys = ((point.time - t_0) / inter), dict[point.action]
-                item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-                i -= 60
-            else:
-                brush = QtGui.QBrush(QtGui.QColor(COLORS[dict[point.action] % n]))
-                xys = ((point.time - t_0) / inter), dict[point.action]
-                item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-            item.setPen(pen)
-            item.setBrush(brush)
-            item.setToolTip(point.action+' '+ point.arg)
+        dict = {}
+        for point in self.act:
+            if self.sel[point.action]== 'Y':
+                if point.action not in dict:
+                    dict[point.action] = i
+                    brush = QtGui.QBrush(QtGui.QColor(COLORS[i % n]))
+                    xys = ((point.time - t_0) / inter), dict[point.action]
+                    item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                    i -= 60
+                else:
+                    brush = QtGui.QBrush(QtGui.QColor(COLORS[dict[point.action] % n]))
+                    xys = ((point.time - t_0) / inter), dict[point.action]
+                    item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                item.setPen(pen)
+                item.setBrush(brush)
+                item.setToolTip(point.action+' '+ point.arg)
+
+    def select(self):
+        sel = {}
+        for point in self.act:
+            if point.action not in sel:
+                sel[point.action] = input(point.action +'?'+ 'Y = Yes'+ ' '+'N = No'+' ')
+        return(sel)
+
 
 
 
