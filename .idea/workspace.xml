@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ec5d5b2b-7e5b-47f9-bfbe-9ce334af764d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/QtDesigner/mainwindow.ui" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/QtDesigner/QtDesigner.pro" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/QtDesigner/main.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/QtDesigner/mainwindow.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/QtDesigner/mainwindow.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ProjetPython.iml" afterPath="$PROJECT_DIR$/.idea/ProjetPython.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zero.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Config.ui" afterPath="$PROJECT_DIR$/Config.ui" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
 <<<<<<< Updated upstream
 =======
@@ -35,14 +30,31 @@
         <entry file="file://$PROJECT_DIR$/configuration.py">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <state relative-caret-position="1155">
               <caret line="86" column="54" selection-start-line="86" selection-start-column="54" selection-end-line="86" selection-end-column="54" />
 =======
             <state relative-caret-position="303">
               <caret line="90" column="5" lean-forward="false" selection-start-line="90" selection-start-column="5" selection-end-line="90" selection-end-column="5" />
 >>>>>>> Stashed changes
+=======
+            <state relative-caret-position="403">
+              <caret line="91" column="21" selection-start-line="91" selection-start-column="21" selection-end-line="91" selection-end-column="21" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#4#46#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="zero.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/zero.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="990">
+              <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,11 +93,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <state relative-caret-position="73">
+=======
+            <state relative-caret-position="328">
+>>>>>>> Stashed changes
               <caret line="25" column="22" selection-start-line="25" selection-start-column="11" selection-end-line="25" selection-end-column="22" />
 =======
             <state relative-caret-position="200">
@@ -117,6 +133,7 @@
         <entry file="file://$PROJECT_DIR$/visu.py">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <state relative-caret-position="361">
               <caret line="104" column="65" selection-start-line="104" selection-start-column="65" selection-end-line="104" selection-end-column="65" />
 =======
@@ -125,6 +142,14 @@
 >>>>>>> Stashed changes
               <folding>
                 <element signature="e#508#777#0" expanded="false" />
+=======
+            <state relative-caret-position="30">
+              <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
+              <folding>
+                <element signature="e#955#1114#0" expanded="false" />
+                <element signature="e#1156#1186#0" expanded="false" />
+                <element signature="e#1229#2215#0" expanded="false" />
+>>>>>>> Stashed changes
                 <element signature="e#1839#2017#0" expanded="false" />
               </folding>
             </state>
@@ -132,6 +157,13 @@
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -142,7 +174,11 @@
         <option value="$PROJECT_DIR$/lect_fichier.py" />
         <option value="$PROJECT_DIR$/visu.py" />
         <option value="$PROJECT_DIR$/configuration.py" />
+<<<<<<< Updated upstream
         <option value="$PROJECT_DIR$/main.py" />
+=======
+        <option value="$PROJECT_DIR$/zero.py" />
+>>>>>>> Stashed changes
       </list>
     </option>
   </component>
@@ -215,7 +251,7 @@
     <property name="FullScreen" value="true" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.zero">
     <configuration default="false" name="configuration" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -246,6 +282,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="ProjetPython" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="zero" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="ProjetPython" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/zero.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -384,14 +437,16 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.configuration" />
       <item index="1" class="java.lang.String" itemvalue="Python.main" />
+      <item index="2" class="java.lang.String" itemvalue="Python.zero" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.main" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.zero" />
         <item index="1" class="java.lang.String" itemvalue="Python.configuration" />
+        <item index="2" class="java.lang.String" itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -794,7 +849,13 @@
         <state relative-caret-position="660">
           <caret line="86" column="89" selection-start-line="86" selection-start-column="89" selection-end-line="86" selection-end-column="89" />
           <folding>
+<<<<<<< Updated upstream
             <element signature="e#508#777#0" expanded="false" />
+=======
+            <element signature="e#955#1114#0" expanded="false" />
+            <element signature="e#1156#1186#0" expanded="false" />
+            <element signature="e#1229#2215#0" expanded="false" />
+>>>>>>> Stashed changes
             <element signature="e#1839#2017#0" expanded="false" />
           </folding>
         </state>
@@ -858,7 +919,13 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+<<<<<<< Updated upstream
             <element signature="e#508#777#0" expanded="false" />
+=======
+            <element signature="e#955#1114#0" expanded="false" />
+            <element signature="e#1156#1186#0" expanded="false" />
+            <element signature="e#1229#2215#0" expanded="false" />
+>>>>>>> Stashed changes
             <element signature="e#1839#2017#0" expanded="false" />
           </folding>
         </state>
@@ -942,9 +1009,6 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#168#420#0" expanded="false" />
-            <element signature="e#508#777#0" expanded="false" />
-            <element signature="e#846#873#0" expanded="false" />
             <element signature="e#955#1114#0" expanded="false" />
             <element signature="e#1156#1186#0" expanded="false" />
             <element signature="e#1229#2215#0" expanded="false" />
@@ -976,8 +1040,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/visu.py">
+    <entry file="file://$PROJECT_DIR$/inspector.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="361">
           <caret line="104" column="65" selection-start-line="104" selection-start-column="65" selection-end-line="104" selection-end-column="65" />
 =======
@@ -988,12 +1053,19 @@
 >>>>>>> Stashed changes
           <folding>
             <element signature="e#25#35#0" expanded="true" />
+=======
+        <state relative-caret-position="0">
+          <caret line="0" column="2" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+          <folding>
+            <element signature="e#164#197#0" expanded="true" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/configuration.py">
+    <entry file="file://$PROJECT_DIR$/Qt1.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         <state relative-caret-position="1155">
           <caret line="86" column="54" selection-start-line="86" selection-start-column="54" selection-end-line="86" selection-end-column="54" />
@@ -1004,6 +1076,11 @@
           <folding>
             <element signature="e#4#46#0" expanded="true" />
           </folding>
+=======
+        <state relative-caret-position="-77">
+          <caret line="0" column="23" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+          <folding />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
@@ -1015,30 +1092,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/inspector.py">
+    <entry file="file://$PROJECT_DIR$/visu.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="2" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+        <state relative-caret-position="30">
+          <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
           <folding>
-            <element signature="e#164#197#0" expanded="true" />
+            <element signature="e#955#1114#0" expanded="false" />
+            <element signature="e#1156#1186#0" expanded="false" />
+            <element signature="e#1229#2215#0" expanded="false" />
+            <element signature="e#1839#2017#0" expanded="false" />
+            <element signature="e#3447#3528#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Qt1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-77">
-          <caret line="0" column="23" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
+        <state relative-caret-position="328">
           <caret line="25" column="22" selection-start-line="25" selection-start-column="11" selection-end-line="25" selection-end-column="22" />
           <folding>
             <element signature="e#25#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configuration.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="91" column="21" selection-start-line="91" selection-start-column="21" selection-end-line="91" selection-end-column="21" />
+          <folding>
+            <element signature="e#4#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zero.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
           </folding>
         </state>
       </provider>
