@@ -73,7 +73,6 @@ class View(QtWidgets.QWidget):
         self.scene.addItem(timeline_group)
         timeline_group.setZValue(0)
         pen = QtGui.QPen(QtCore.Qt.transparent)
-        line_pen = QtGui.QPen(QtGui.QColor("black"))
         width = 30
         i = 720
         t_0 = self.act[0].time
@@ -100,7 +99,7 @@ class View(QtWidgets.QWidget):
         sel = {}
         for point in self.act:
             if point.action not in sel:
-                sel[point.action] = input(point.action +'?'+ 'Y = Yes'+ ' '+'N = No'+' ')
+                sel[point.action] = input(point.action +' ?'+ 'Y = Yes'+ ' '+'N = No'+' ')
         return(sel)
 
 

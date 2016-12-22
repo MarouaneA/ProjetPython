@@ -6,28 +6,26 @@ __author__ = 'veronhu'
 """
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QWidget, QListWidgetItem
-
-from Qt1 import Ui_Form
+from zero import Ui_FenetreG
+import lect_fichier
 
 
 class Inspector(QWidget):
     """ Widget displaying information about a Flight """
 
-    def __init__(self):
+    def __init__(self,View,act):
         super(Inspector, self).__init__()
 
         # sets up instance variables
-
-        self.ui_Inspector = Ui_Form()
+        self.view = View
+        self.ui_Inspector = Ui_FenetreG(act)
 
         # sets up the widget created with Qt Designer and pyuic
         self.ui_Inspector.setupUi(self)
 
         # populates the 'filter by type' combobox
-
-
-
         self.show()
+
 
 
 

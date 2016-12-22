@@ -22,7 +22,7 @@ app = QtWidgets.QApplication([])
 View = visu.View(act)
 
 # create the inspector
-the_inspector_window = inspector.Inspector()
+the_inspector_window = inspector.Inspector(View,act)
 # create a QDockWidget for the inspector
 the_inspector_dock = QtWidgets.QDockWidget()
 the_inspector_dock.setWidget(the_inspector_window)
@@ -30,17 +30,11 @@ the_inspector_dock.setWidget(the_inspector_window)
 win = QtWidgets.QMainWindow()
 win.setWindowTitle("TIMELINE")
 win.setCentralWidget(View)
-win.addDockWidget(QtCore.Qt.DockWidgetArea(2), the_inspector_dock)
-the_inspector_dock2 = QtWidgets.QDockWidget()
-the_inspector_window2 = inspector.Inspector()
-the_inspector_dock2.setWidget(the_inspector_window2)
-win.addDockWidget(QtCore.Qt.DockWidgetArea(1), the_inspector_dock2)
+win.addDockWidget(QtCore.Qt.DockWidgetArea(1), the_inspector_dock)
 win.resize(1200, 600)
 win.show()
-# win.showMaximized()
-print(QtCore.Qt.DockWidgetArea(2))
+
 # enter the main loop
 result = app.exec_()
-
 # shut down nicely if main loop has exited, passing the 'result' i.e. the status or error code
 sys.exit(result)

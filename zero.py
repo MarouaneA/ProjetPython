@@ -90,16 +90,16 @@ class Ui_FenetreG(object):
 
 
 
-        FenetreG.setCentralWidget(self.centralwidget)
+        #FenetreG.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(FenetreG)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 22))
         self.menubar.setObjectName("menubar")
         self.menuFenetreG = QtWidgets.QMenu(self.menubar)
         self.menuFenetreG.setObjectName("menuFenetreG")
-        FenetreG.setMenuBar(self.menubar)
+        #FenetreG.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(FenetreG)
         self.statusbar.setObjectName("statusbar")
-        FenetreG.setStatusBar(self.statusbar)
+        #FenetreG.setStatusBar(self.statusbar)
         self.menuFenetreG.addSeparator()
         self.menubar.addAction(self.menuFenetreG.menuAction())
 
