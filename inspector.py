@@ -22,7 +22,6 @@ class Inspector(QWidget):
 
         # sets up the widget created with Qt Designer and pyuic
         self.ui_Inspector.setupUi(self)
-
         # populates the 'filter by type' combobox
         self.show()
 

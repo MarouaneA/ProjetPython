@@ -6,7 +6,6 @@ import sys
 from PyQt5 import QtWidgets, QtCore
 from Qt1 import Ui_Form
 import lect_fichier
-import inspector
 import visu
 import inspector
 import configuration

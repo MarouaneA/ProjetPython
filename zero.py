@@ -20,31 +20,35 @@ class Ui_FenetreG(object):
         self.centralwidget = QtWidgets.QWidget(FenetreG)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(280, 0, 581, 481))
-        self.verticalLayoutWidget.resize(110, 600)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(190, 0, 581, 481))
+        self.verticalLayoutWidget.resize(110, 500)
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.verticalLayoutWidget2 = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget2.setGeometry(QtCore.QRect(400, 0, 581, 481))
-        self.verticalLayoutWidget2.resize(110, 600)
+        self.verticalLayoutWidget2.setGeometry(QtCore.QRect(300, 0, 581, 481))
+        self.verticalLayoutWidget2.resize(110, 500)
         self.verticalLayoutWidget2.setObjectName("verticalLayoutWidget2")
         self.verticalLayout2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget2)
         self.verticalLayout2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout2.setObjectName("verticalLayout3")
         self.verticalLayoutWidget3 = QtWidgets.QWidget(self.centralwidget)
         self.verticalLayoutWidget3.setGeometry(QtCore.QRect(10, 0, 581, 481))
-        self.verticalLayoutWidget3.resize(280, 600)
+        self.verticalLayoutWidget3.resize(110, 500)
         self.verticalLayoutWidget3.setObjectName("verticalLayoutWidget3")
         self.verticalLayout3 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget3)
         self.verticalLayout3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout3.setObjectName("verticalLayout2")
+        font = QtGui.QFont()
+        font.setPointSize(9)
+
 
 
 
         for evnt in self.list_action:
             cbbxF = QtWidgets.QComboBox(self.verticalLayoutWidget)
+            cbbxF.setFont(font)
             cbbxF.setGeometry(QtCore.QRect(650, 90, 115, 26))
             cbbxF.addItem("")
             cbbxF.addItem("")
@@ -53,6 +57,7 @@ class Ui_FenetreG(object):
             self.verticalLayout.addWidget(cbbxF)
 
             cbbxC = QtWidgets.QComboBox(self.verticalLayoutWidget2)
+            cbbxC.setFont(font)
             cbbxC.setGeometry(QtCore.QRect(220, 50, 91, 26))
             cbbxC.setAutoFillBackground(False)
             cbbxC.addItem("")
@@ -82,10 +87,13 @@ class Ui_FenetreG(object):
             self.verticalLayout2.addWidget(cbbxC)
 
             Label = QtWidgets.QLabel(self.verticalLayoutWidget3)
+            Label.setFont(font)
             Label.setGeometry(QtCore.QRect(390, 100, 67, 16))
             Label.setText("")
             self.list_label.append(Label)
             self.verticalLayout3.addWidget(Label)
+
+
 
 
 
