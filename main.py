@@ -30,7 +30,7 @@ win = QtWidgets.QMainWindow()
 win.setWindowTitle("TIMELINE")
 win.setCentralWidget(View)
 win.addDockWidget(QtCore.Qt.DockWidgetArea(1), the_inspector_dock)
-win.resize(1200, 600)
+win.resize(1280, 720)
 win.show()
 
 # enter the main loop

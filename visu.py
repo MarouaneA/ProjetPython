@@ -11,7 +11,7 @@ from PyQt5.QtGui import QWheelEvent
 COLORS = ['red', 'orange', 'blue', 'green', 'magenta', 'cyan', 'lime', 'purple', 'silver', 'indigo', 'maroon',
           'olive', 'navy', 'goldenrod', 'teal', 'darkorange' 'crimson', 'seagreen', 'steelblue', 'lightcoral',
           'grey', 'black', 'orangered']
-
+FORME = ['R','E','C']
 n = len(COLORS)
 
 class View(QtWidgets.QWidget):
@@ -21,6 +21,8 @@ class View(QtWidgets.QWidget):
         self.setWindowTitle('Timeline')
         self.act = act
         self.sel = self.select()
+        self.color = self.color()
+        #self.form = self.form()
         self.grview = None
         self.scene = None
         self.entry = None
@@ -74,22 +76,22 @@ class View(QtWidgets.QWidget):
         timeline_group.setZValue(0)
         pen = QtGui.QPen(QtCore.Qt.transparent)
         width = 30
-        i = 720
+        i = 0
         t_0 = self.act[0].time
         t_f = self.act[-1].time
         inter= (t_f - t_0)/2000
         dict = {}
         for point in self.act:
-            if self.sel[point.action]== 'Y':
+            if self.sel[point.action]== '':
                 if point.action not in dict:
                     dict[point.action] = i
-                    brush = QtGui.QBrush(QtGui.QColor(COLORS[i % n]))
-                    xys = ((point.time - t_0) / inter), dict[point.action]
+                    brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
+                    xys = ((point.time - t_0) / inter), 720-60*dict[point.action]
                     item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-                    i -= 60
+                    i += 1
                 else:
-                    brush = QtGui.QBrush(QtGui.QColor(COLORS[dict[point.action] % n]))
-                    xys = ((point.time - t_0) / inter), dict[point.action]
+                    brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
+                    xys = ((point.time - t_0) / inter), 720-60*dict[point.action]
                     item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                 item.setPen(pen)
                 item.setBrush(brush)
@@ -99,15 +101,22 @@ class View(QtWidgets.QWidget):
         sel = {}
         for point in self.act:
             if point.action not in sel:
-                sel[point.action] = input(point.action +' ?'+ 'Y = Yes'+ ' '+'N = No'+' ')
+                sel[point.action] = input(point.action +' ?'+ ' = Yes'+ ' '+'N = No'+' ')
         return(sel)
 
+    def color(self):
+        col = {}
+        for point in self.act:
+            if point.action not in col:
+                col[point.action] = COLORS[int(input(point.action+' i = ?'))%n]
+        return(col)
 
-
-
-
-
-
+    def form(self):
+        forme = {}
+        for point in self.act:
+            if point.action not in forme:
+                forme[point.action] = FORME[input('i = ?')]
+        return(forme)
 
 def xy_coords(xy, width):
     dw = width / 2.

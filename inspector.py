@@ -8,7 +8,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QWidget, QListWidgetItem
 from zero import Ui_FenetreG
 import lect_fichier
-
+import  visu
 
 class Inspector(QWidget):
     """ Widget displaying information about a Flight """
@@ -24,7 +24,4 @@ class Inspector(QWidget):
         self.ui_Inspector.setupUi(self)
         # populates the 'filter by type' combobox
         self.show()
-
-
-
 
