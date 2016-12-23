@@ -35,7 +35,7 @@ class Ui_FenetreG(object):
         self.verticalLayout2.setObjectName("verticalLayout3")
         self.verticalLayoutWidget3 = QtWidgets.QWidget(self.centralwidget)
         self.verticalLayoutWidget3.setGeometry(QtCore.QRect(10, 0, 581, 481))
-        self.verticalLayoutWidget3.resize(110, 500)
+        self.verticalLayoutWidget3.resize(200, 500)
         self.verticalLayoutWidget3.setObjectName("verticalLayoutWidget3")
         self.verticalLayout3 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget3)
         self.verticalLayout3.setContentsMargins(0, 0, 0, 0)
