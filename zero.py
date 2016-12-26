@@ -148,11 +148,37 @@ class Ui_FenetreG(object):
             self.list_label[k].setText(_translate("FenetreG", self.list_action[k]))
 
 
+    def color(self):
+        col = {}
+        k=0
+        for point in self.action:
+            if point.action not in col:
+                col[point.action] = self.list_cbbxF[k].currentText()
+                k+=1
+        return(col)
+    
+    def form(self):
+        form = {}
+        k=0
+        for point in self.action:
+            if point.action not in form:
+                form[point.action] = self.list_cbbxC[k].currentText()
+                k+=1
+        return(form)
+
+
+
+
+
 if __name__ == "__main__":
     act = lect_fichier.load_actions("essai_donnees.txt")
     app = QtWidgets.QApplication(sys.argv)
     FenetreG = QtWidgets.QMainWindow()
     ui = Ui_FenetreG(act)
     ui.setupUi(FenetreG)
+    col=ui.color()
+    print(col)
+    form=ui.form()
+    print(form)
     FenetreG.show()
     sys.exit(app.exec_())

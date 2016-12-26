@@ -4,11 +4,9 @@ __author__ = 'veronhu'
 import sys
 
 from PyQt5 import QtWidgets, QtCore
-from Qt1 import Ui_Form
 import lect_fichier
 import visu
 import inspector
-import configuration
 
 
 MUSIC_FILE='essai_donnees_2.txt'
