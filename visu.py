@@ -1,11 +1,11 @@
 __author__ = 'aatefma'
 import math
-import lect_fichier
-import configuration
+
 
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QWheelEvent
+import inspector
 
 
 COLORS = ['red', 'orange', 'blue', 'green', 'magenta', 'cyan', 'lime', 'purple', 'silver', 'indigo', 'maroon',
@@ -19,7 +19,7 @@ class View(QtWidgets.QWidget):
     def __init__(self, act):
         super(View, self).__init__()
         self.setWindowTitle('Timeline')
-        self.act = act
+        self.action = act
         self.sel = self.select()
         self.color = self.color()
         #self.form = self.form()
@@ -64,7 +64,7 @@ class View(QtWidgets.QWidget):
             button = QtWidgets.QPushButton(text)
             button.clicked.connect(slot)
             vbox.addWidget(button)
-        add_button ("split view", lambda: self.draw_timeline())
+        add_button ("split view", lambda: None)
         label_4 = QtWidgets.QLabel()
         label_4.setFrameShape(QtWidgets.QFrame.NoFrame)
         label_4.setObjectName("label_4")
@@ -77,11 +77,11 @@ class View(QtWidgets.QWidget):
         pen = QtGui.QPen(QtCore.Qt.transparent)
         width = 30
         i = 0
-        t_0 = self.act[0].time
-        t_f = self.act[-1].time
+        t_0 = self.action[0].time
+        t_f = self.action[-1].time
         inter= (t_f - t_0)/2000
         dict = {}
-        for point in self.act:
+        for point in self.action:
             if self.sel[point.action]== '':
                 if point.action not in dict:
                     dict[point.action] = i
@@ -99,24 +99,24 @@ class View(QtWidgets.QWidget):
 
     def select(self):
         sel = {}
-        for point in self.act:
+        for point in self.action:
             if point.action not in sel:
                 sel[point.action] = input(point.action +' ?'+ ' = Yes'+ ' '+'N = No'+' ')
         return(sel)
 
     def color(self):
         col = {}
-        for point in self.act:
+        for point in self.action:
             if point.action not in col:
                 col[point.action] = COLORS[int(input(point.action+' i = ?'))%n]
         return(col)
 
-    def form(self):
+    """def form(self):
         forme = {}
         for point in self.act:
             if point.action not in forme:
                 forme[point.action] = FORME[input('i = ?')]
-        return(forme)
+        return(forme)"""
 
 def xy_coords(xy, width):
     dw = width / 2.

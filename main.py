@@ -16,10 +16,11 @@ act= lect_fichier.load_actions(MUSIC_FILE)
 app = QtWidgets.QApplication([])
 
 # create the radar view and the time navigation interface
-View = visu.View(act)
 
+View = visu.View(act)
+col = View.color
 # create the inspector
-the_inspector_window = inspector.Inspector(View,act)
+the_inspector_window = inspector.Inspector(View,act,col)
 # create a QDockWidget for the inspector
 the_inspector_dock = QtWidgets.QDockWidget()
 the_inspector_dock.setWidget(the_inspector_window)
@@ -33,5 +34,6 @@ win.show()
 
 # enter the main loop
 result = app.exec_()
+
 # shut down nicely if main loop has exited, passing the 'result' i.e. the status or error code
 sys.exit(result)

@@ -2,16 +2,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import lect_fichier
 import configuration
+import visu
+
 
 
 class Ui_FenetreG(object):
 
-    def __init__(self, act):
+    def __init__(self, act,col):
         self.action = act
         self.list_cbbxF = []   # liste des Combobox des différentes formes
         self.list_cbbxC = []   # liste des Combobox des différentes couleurs
         self.list_action = configuration.list_action(self.action)  # liste des actions sous forme de str
         self.list_label = []   # liste des Labels
+        self.color = col
+        self.form = None
 
     def setupUi(self, FenetreG):
         FenetreG.setObjectName("FenetreG")
@@ -93,11 +97,6 @@ class Ui_FenetreG(object):
             self.list_label.append(Label)
             self.verticalLayout3.addWidget(Label)
 
-
-
-
-
-
         #FenetreG.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(FenetreG)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 22))
@@ -122,8 +121,8 @@ class Ui_FenetreG(object):
             self.list_cbbxF[k].setItemText(0, _translate("FenetreG", "Ellipse"))
             self.list_cbbxF[k].setItemText(1, _translate("FenetreG", "Circle"))
             self.list_cbbxF[k].setItemText(2, _translate("FenetreG", "Rectangle"))
-            self.list_cbbxC[k].setItemText(0, _translate("FenetreG", "orange"))
-            self.list_cbbxC[k].setItemText(1, _translate("FenetreG", "red"))
+            self.list_cbbxC[k].setItemText(0, _translate("FenetreG", "red"))
+            self.list_cbbxC[k].setItemText(1, _translate("FenetreG", "orange"))
             self.list_cbbxC[k].setItemText(2, _translate("FenetreG", "blue"))
             self.list_cbbxC[k].setItemText(3, _translate("FenetreG", "green"))
             self.list_cbbxC[k].setItemText(4, _translate("FenetreG", "magenta"))
@@ -147,31 +146,8 @@ class Ui_FenetreG(object):
             self.list_cbbxC[k].setItemText(22, _translate("FenetreG", "orangered"))
             self.list_label[k].setText(_translate("FenetreG", self.list_action[k]))
 
-
-    def color(self):
-        col = {}
-        k=0
-        for point in self.action:
-            if point.action not in col:
-                col[point.action] = self.list_cbbxF[k].currentText()
-                k+=1
-        return(col)
-    
-    def form(self):
-        form = {}
-        k=0
-        for point in self.action:
-            if point.action not in form:
-                form[point.action] = self.list_cbbxC[k].currentText()
-                k+=1
-        return(form)
-
-
-
-
-
 if __name__ == "__main__":
-    act = lect_fichier.load_actions("essai_donnees.txt")
+    act = lect_fichier.load_actions('essai_donnees_2.txt')
     app = QtWidgets.QApplication(sys.argv)
     FenetreG = QtWidgets.QMainWindow()
     ui = Ui_FenetreG(act)
