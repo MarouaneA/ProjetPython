@@ -8,13 +8,12 @@ import visu
 
 class Ui_FenetreG(object):
 
-    def __init__(self, act,col):
+    def __init__(self, act):
         self.action = act
         self.list_cbbxF = []   # liste des Combobox des différentes formes
         self.list_cbbxC = []   # liste des Combobox des différentes couleurs
         self.list_action = configuration.list_action(self.action)  # liste des actions sous forme de str
         self.list_label = []   # liste des Labels
-        self.color = col
         self.form = None
 
     def setupUi(self, FenetreG):
@@ -89,7 +88,6 @@ class Ui_FenetreG(object):
             cbbxC.addItem("")
             self.list_cbbxC.append(cbbxC)
             self.verticalLayout2.addWidget(cbbxC)
-
             Label = QtWidgets.QLabel(self.verticalLayoutWidget3)
             Label.setFont(font)
             Label.setGeometry(QtCore.QRect(390, 100, 67, 16))
@@ -152,9 +150,5 @@ if __name__ == "__main__":
     FenetreG = QtWidgets.QMainWindow()
     ui = Ui_FenetreG(act)
     ui.setupUi(FenetreG)
-    col=ui.color()
-    print(col)
-    form=ui.form()
-    print(form)
     FenetreG.show()
     sys.exit(app.exec_())

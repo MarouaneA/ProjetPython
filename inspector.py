@@ -18,7 +18,7 @@ class Inspector(QWidget):
         self.view = View
         self.action = act
         self.color = col
-        self.ui_Inspector = Ui_FenetreG(act,col)
+        self.ui_Inspector = Ui_FenetreG(act)
 
         # sets up the widget created with Qt Designer and pyuic
         self.ui_Inspector.setupUi(self)
@@ -27,7 +27,7 @@ class Inspector(QWidget):
     def color(self):
         k = 0
         for point in self.action:
-            self.color[point.action] = self.list_cbbxF[k].currentText()
+            self.color[point.action] = self.list_cbbxC[k].currentText()
             k += 1
 
     def form(self):
@@ -35,6 +35,6 @@ class Inspector(QWidget):
         k = 0
         for point in self.action:
             if point.action not in form:
-                form[point.action] = self.list_cbbxC[k].currentText()
+                form[point.action] = self.list_cbbxF[k].currentText()
                 k += 1
         return (form)

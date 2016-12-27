@@ -7,6 +7,7 @@ from PyQt5 import QtWidgets, QtCore
 import lect_fichier
 import visu
 import inspector
+import zero
 
 
 MUSIC_FILE='essai_donnees_2.txt'
@@ -16,8 +17,8 @@ act= lect_fichier.load_actions(MUSIC_FILE)
 app = QtWidgets.QApplication([])
 
 # create the radar view and the time navigation interface
-
-View = visu.View(act)
+ui=zero.Ui_FenetreG(act)
+View = visu.View(act,ui)
 col = View.color
 # create the inspector
 the_inspector_window = inspector.Inspector(View,act,col)
