@@ -95,16 +95,16 @@ class Ui_FenetreG(object):
             self.list_label.append(Label)
             self.verticalLayout3.addWidget(Label)
 
-        #FenetreG.setCentralWidget(self.centralwidget)
+        FenetreG.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(FenetreG)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 22))
         self.menubar.setObjectName("menubar")
         self.menuFenetreG = QtWidgets.QMenu(self.menubar)
         self.menuFenetreG.setObjectName("menuFenetreG")
-        #FenetreG.setMenuBar(self.menubar)
+        FenetreG.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(FenetreG)
         self.statusbar.setObjectName("statusbar")
-        #FenetreG.setStatusBar(self.statusbar)
+        FenetreG.setStatusBar(self.statusbar)
         self.menuFenetreG.addSeparator()
         self.menubar.addAction(self.menuFenetreG.menuAction())
 
@@ -143,6 +143,26 @@ class Ui_FenetreG(object):
             self.list_cbbxC[k].setItemText(21, _translate("FenetreG", "black"))
             self.list_cbbxC[k].setItemText(22, _translate("FenetreG", "orangered"))
             self.list_label[k].setText(_translate("FenetreG", self.list_action[k]))
+            self.list_cbbxC[k].setObjectName(self.list_action[k])
+
+    def color(self):
+        colour={}
+        k = 0
+        for point in self.action:
+            if point.action not in colour:
+                colour[point.action] = self.list_cbbxC[k].currentText()
+                k += 1
+        for j in range(len(colour)):
+            self.list_cbbxC[j].currentTextChanged.connect(lambda: self.changed(self.list_action[j],self.list_cbbxC[j]))
+        return colour
+
+
+    def changed(self,name,evnt):
+        colour= self.color()
+        colour[name]=evnt.currentText()
+        print (colour)
+
+
 
 if __name__ == "__main__":
     act = lect_fichier.load_actions('essai_donnees_2.txt')
@@ -150,5 +170,6 @@ if __name__ == "__main__":
     FenetreG = QtWidgets.QMainWindow()
     ui = Ui_FenetreG(act)
     ui.setupUi(FenetreG)
+    print(ui.color())
     FenetreG.show()
     sys.exit(app.exec_())
