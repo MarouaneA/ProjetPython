@@ -95,16 +95,16 @@ class Ui_FenetreG(object):
             self.list_label.append(Label)
             self.verticalLayout3.addWidget(Label)
 
-        FenetreG.setCentralWidget(self.centralwidget)
+        #FenetreG.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(FenetreG)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 22))
         self.menubar.setObjectName("menubar")
         self.menuFenetreG = QtWidgets.QMenu(self.menubar)
         self.menuFenetreG.setObjectName("menuFenetreG")
-        FenetreG.setMenuBar(self.menubar)
+        #FenetreG.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(FenetreG)
         self.statusbar.setObjectName("statusbar")
-        FenetreG.setStatusBar(self.statusbar)
+        #FenetreG.setStatusBar(self.statusbar)
         self.menuFenetreG.addSeparator()
         self.menubar.addAction(self.menuFenetreG.menuAction())
 
@@ -153,14 +153,31 @@ class Ui_FenetreG(object):
                 colour[point.action] = self.list_cbbxC[k].currentText()
                 k += 1
         for j in range(len(colour)):
-            self.list_cbbxC[j].currentTextChanged.connect(lambda: self.changed(self.list_action[j],self.list_cbbxC[j]))
+            self.list_cbbxC[j].currentTextChanged.connect(lambda: self.changedC(self.list_action[j],self.list_cbbxC[j]))
         return colour
 
 
-    def changed(self,name,evnt):
+    def changedC(self,name,evnt):
         colour= self.color()
         colour[name]=evnt.currentText()
         print (colour)
+
+    def form(self):
+        forms={}
+        k = 0
+        for point in self.action:
+            if point.action not in forms:
+                forms[point.action] = self.list_cbbxF[k].currentText()
+                k += 1
+        for j in range(len(forms)):
+            self.list_cbbxF[j].currentTextChanged.connect(lambda: self.changedF(self.list_action[j],self.list_cbbxF[j]))
+        return forms
+
+
+    def changedF(self,name,evnt):
+        forms= self.form()
+        forms[name]=evnt.currentText()
+        print (forms)
 
 
 
