@@ -13,6 +13,7 @@ class Ui_MainWindow(object):
         self.action = act
         self.list_chkbx = []   # liste des Checkbox créées qui contiennent les différentes actions
         self.list_action = list_action(self.action)  # liste des actions sous forme de str
+        self.selec=initialisation(self)
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -25,14 +26,14 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-
+        dicstate={}
         for evnt in self.list_action:
             chkbx = QtWidgets.QCheckBox(self.verticalLayoutWidget)
             chkbx.setObjectName(evnt)
             chkbx.toggle()  # initialise l'état de la Checkbox à 'sélectionnée'
             # state (1er argument) : argument obligatoire de la méthode stateChanged + nécessité de mettre chkbx=chkbx
             # sinon la fonction n'évalue que le dernier de la boucle 'for' ( il faut définir des variables indépendantes)
-            chkbx.stateChanged.connect(lambda state=0,chkbx=chkbx : self.dict_evnt(state,chkbx))
+            chkbx.stateChanged.connect(lambda state=0,chkbx=chkbx : dict_evnt(self,state,chkbx))
             self.list_chkbx.append(chkbx)
             self.verticalLayout.addWidget(chkbx)
 
@@ -63,14 +64,17 @@ class Ui_MainWindow(object):
             # state = 2
             print(evnt.text()+" is selected")
 
-    def dict_evnt(self, state, evnt):
-        dict = {}
-        if state == 0 :
-            dict[evnt.text()] = "deselected"
-        else :
-            dict[evnt.text()] = "selected"
-        print(dict)
+def initialisation(Ui_MainWindow):
+    selec={}
+    for point in Ui_MainWindow.list_action:
+        selec[point]="selected"
+    return selec
 
+def dict_evnt(ui, state, evnt):
+    if state == 0 :
+        ui.selec[evnt.text()] = "deselected"
+    else :
+        ui.selec[evnt.text()] = "selected"
 
 
 def list_action(act):
@@ -87,8 +91,8 @@ if __name__ == "__main__":
     act = lect_fichier.load_actions("essai_donnees.txt")
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow(act)
-    ui.setupUi(MainWindow)
+    ui2 = Ui_MainWindow(act)
+    ui2.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
 

@@ -2,8 +2,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import lect_fichier
 import configuration
-import visu
-
 
 
 class Ui_FenetreG(object):
@@ -14,7 +12,6 @@ class Ui_FenetreG(object):
         self.list_cbbxC = []   # liste des Combobox des différentes couleurs
         self.list_action = configuration.list_action(self.action)  # liste des actions sous forme de str
         self.list_label = []   # liste des Labels
-        self.form = None
 
     def setupUi(self, FenetreG):
         FenetreG.setObjectName("FenetreG")
@@ -115,37 +112,41 @@ class Ui_FenetreG(object):
     def retranslateUi(self, FenetreG):
         _translate = QtCore.QCoreApplication.translate
         FenetreG.setWindowTitle(_translate("FenetreG", "Select preferences"))
-        for k in range(len(self.list_action)):
-            self.list_cbbxF[k].setItemText(0, _translate("FenetreG", "Ellipse"))
-            self.list_cbbxF[k].setItemText(1, _translate("FenetreG", "Circle"))
-            self.list_cbbxF[k].setItemText(2, _translate("FenetreG", "Rectangle"))
-            self.list_cbbxC[k].setItemText(0, _translate("FenetreG", "red"))
-            self.list_cbbxC[k].setItemText(1, _translate("FenetreG", "orange"))
-            self.list_cbbxC[k].setItemText(2, _translate("FenetreG", "blue"))
-            self.list_cbbxC[k].setItemText(3, _translate("FenetreG", "green"))
-            self.list_cbbxC[k].setItemText(4, _translate("FenetreG", "magenta"))
-            self.list_cbbxC[k].setItemText(5, _translate("FenetreG", "cyan"))
-            self.list_cbbxC[k].setItemText(6, _translate("FenetreG", "lime"))
-            self.list_cbbxC[k].setItemText(7, _translate("FenetreG", "purple"))
-            self.list_cbbxC[k].setItemText(8, _translate("FenetreG", "silver"))
-            self.list_cbbxC[k].setItemText(9, _translate("FenetreG", "indigo"))
-            self.list_cbbxC[k].setItemText(10, _translate("FenetreG", "maroon"))
-            self.list_cbbxC[k].setItemText(11, _translate("FenetreG", "olive"))
-            self.list_cbbxC[k].setItemText(12, _translate("FenetreG", "navy"))
-            self.list_cbbxC[k].setItemText(13, _translate("FenetreG", "goldenrhod"))
-            self.list_cbbxC[k].setItemText(14, _translate("FenetreG", "teal"))
-            self.list_cbbxC[k].setItemText(15, _translate("FenetreG", "darkorange"))
-            self.list_cbbxC[k].setItemText(16, _translate("FenetreG", "crimson"))
-            self.list_cbbxC[k].setItemText(17, _translate("FenetreG", "seagreen"))
-            self.list_cbbxC[k].setItemText(18, _translate("FenetreG", "steelblue"))
-            self.list_cbbxC[k].setItemText(19, _translate("FenetreG", "lightcoral"))
-            self.list_cbbxC[k].setItemText(20, _translate("FenetreG", "grey"))
-            self.list_cbbxC[k].setItemText(21, _translate("FenetreG", "black"))
-            self.list_cbbxC[k].setItemText(22, _translate("FenetreG", "orangered"))
-            self.list_label[k].setText(_translate("FenetreG", self.list_action[k]))
-            self.list_cbbxC[k].setObjectName(self.list_action[k])
+        k=0
+        L=[]
+        for point in self.action:
+            if point.action not in L:
+                L.append(point.action)
+                self.list_cbbxF[k].setItemText(0, _translate("FenetreG", "Ellipse"))
+                self.list_cbbxF[k].setItemText(1, _translate("FenetreG", "Circle"))
+                self.list_cbbxF[k].setItemText(2, _translate("FenetreG", "Rectangle"))
+                self.list_cbbxC[k].setItemText(0, _translate("FenetreG", "red"))
+                self.list_cbbxC[k].setItemText(1, _translate("FenetreG", "orange"))
+                self.list_cbbxC[k].setItemText(2, _translate("FenetreG", "blue"))
+                self.list_cbbxC[k].setItemText(3, _translate("FenetreG", "green"))
+                self.list_cbbxC[k].setItemText(4, _translate("FenetreG", "magenta"))
+                self.list_cbbxC[k].setItemText(5, _translate("FenetreG", "cyan"))
+                self.list_cbbxC[k].setItemText(6, _translate("FenetreG", "lime"))
+                self.list_cbbxC[k].setItemText(7, _translate("FenetreG", "purple"))
+                self.list_cbbxC[k].setItemText(8, _translate("FenetreG", "silver"))
+                self.list_cbbxC[k].setItemText(9, _translate("FenetreG", "indigo"))
+                self.list_cbbxC[k].setItemText(10, _translate("FenetreG", "maroon"))
+                self.list_cbbxC[k].setItemText(11, _translate("FenetreG", "olive"))
+                self.list_cbbxC[k].setItemText(12, _translate("FenetreG", "navy"))
+                self.list_cbbxC[k].setItemText(13, _translate("FenetreG", "goldenrhod"))
+                self.list_cbbxC[k].setItemText(14, _translate("FenetreG", "teal"))
+                self.list_cbbxC[k].setItemText(15, _translate("FenetreG", "darkorange"))
+                self.list_cbbxC[k].setItemText(16, _translate("FenetreG", "crimson"))
+                self.list_cbbxC[k].setItemText(17, _translate("FenetreG", "seagreen"))
+                self.list_cbbxC[k].setItemText(18, _translate("FenetreG", "steelblue"))
+                self.list_cbbxC[k].setItemText(19, _translate("FenetreG", "lightcoral"))
+                self.list_cbbxC[k].setItemText(20, _translate("FenetreG", "grey"))
+                self.list_cbbxC[k].setItemText(21, _translate("FenetreG", "black"))
+                self.list_cbbxC[k].setItemText(22, _translate("FenetreG", "orangered"))
+                self.list_label[k].setText(_translate("FenetreG", L[k]))
+                k+=1
 
-    def color(self):
+    """def color(self):
         colour={}
         k = 0
         for point in self.action:
@@ -159,10 +160,24 @@ class Ui_FenetreG(object):
 
     def changedC(self,name,evnt):
         colour= self.color()
-        colour[name]=evnt.currentText()
-        print (colour)
+        colour[name]=evnt.currentText()"""
 
-    def form(self):
+def colour(ui):
+    colour = {}
+    k=0
+    for point in ui.action:
+        if point.action not in colour:
+            colour[point.action] = ui.list_cbbxC[k].currentText()
+            k += 1
+    for j in range(len(colour)):
+        ui.list_cbbxC[j].currentTextChanged.connect(lambda: changedC(ui,ui.list_action[j], ui.list_cbbxC[j]))
+    return colour
+
+def changedC(ui,name, evnt):
+    col = colour(ui)
+    col[name] = evnt.currentText()
+
+    """def form(self):
         forms={}
         k = 0
         for point in self.action:
@@ -176,9 +191,24 @@ class Ui_FenetreG(object):
 
     def changedF(self,name,evnt):
         forms= self.form()
-        forms[name]=evnt.currentText()
-        print (forms)
+        forms[name]=evnt.currentText()"""
 
+def form(ui):
+    forms = {}
+    k = 0
+    for point in ui.action:
+        if point.action not in forms:
+            forms[point.action] = ui.list_cbbxF[k].currentText()
+            k += 1
+    for j in range(len(forms)):
+        ui.list_cbbxF[j].currentTextChanged.connect(lambda: changedF(ui,ui.list_action[j], ui.list_cbbxF[j]))
+    return forms
+
+
+def changedF(ui, name, evnt):
+    forms=form(ui)
+    forms[name] = evnt.currentText()
+    print(forms)
 
 
 if __name__ == "__main__":
@@ -187,6 +217,7 @@ if __name__ == "__main__":
     FenetreG = QtWidgets.QMainWindow()
     ui = Ui_FenetreG(act)
     ui.setupUi(FenetreG)
-    print(ui.color())
+    print(colour(ui))
+    print(form(ui))
     FenetreG.show()
     sys.exit(app.exec_())

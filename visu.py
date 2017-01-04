@@ -5,8 +5,8 @@ import math
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QWheelEvent
-from zero import Ui_FenetreG
-
+import zero
+import configuration
 
 COLORS = ['red', 'orange', 'blue', 'green', 'magenta', 'cyan', 'lime', 'purple', 'silver', 'indigo', 'maroon',
           'olive', 'navy', 'goldenrod', 'teal', 'darkorange' 'crimson', 'seagreen', 'steelblue', 'lightcoral',
@@ -16,14 +16,24 @@ n = len(COLORS)
 
 class View(QtWidgets.QWidget):
 
-    def __init__(self, act, Ui_FenetreG):
+    def __init__(self, act):
         super(View, self).__init__()
         self.setWindowTitle('Timeline')
-        self.action = act
+        self.action =act
         self.sel = self.select()
-        self.list_cbbC= Ui_FenetreG.list_cbbxC
-        self.color = self.col()
-        #self.form = self.form()
+
+
+        FenetreG = QtWidgets.QMainWindow()
+        ui = zero.Ui_FenetreG(act)
+        ui.setupUi(FenetreG)
+        self.color = zero.colour(ui)
+        self.form = zero.form(ui)
+
+        config = QtWidgets.QMainWindow()
+        ui2 = configuration.Ui_MainWindow(act)
+        ui2.setupUi(config)
+        self.selec=ui2.selec
+
         self.grview = None
         self.scene = None
         self.entry = None
@@ -46,13 +56,7 @@ class View(QtWidgets.QWidget):
     def zoom_time(self,value):
         self.draw_timeline(self,value)
 
-    def col(self):
-        k=0
-        c = {}
-        for point in self.action:
-            c[point.action] = self.list_cbbC[k].currentText()
-            k += 1
-        return c
+
 
     def build_interface(self):
         vbox = QtWidgets.QVBoxLayout(self)
@@ -71,7 +75,7 @@ class View(QtWidgets.QWidget):
             button = QtWidgets.QPushButton(text)
             button.clicked.connect(slot)
             vbox.addWidget(button)
-        add_button ("split view", lambda: None)
+        add_button ("split view", change)
         label_4 = QtWidgets.QLabel()
         label_4.setFrameShape(QtWidgets.QFrame.NoFrame)
         label_4.setObjectName("label_4")
@@ -87,30 +91,34 @@ class View(QtWidgets.QWidget):
         t_0 = self.action[0].time
         t_f = self.action[-1].time
         inter= (t_f - t_0)/2000
+        dict={}
         for point in self.action:
-                brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
-                xys = ((point.time - t_0) / inter), 720-60
+            if self.selec[point.action] == 'selected':
+                if point.action not in dict:
+                    dict[point.action] = i
+                    brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
+                    xys = ((point.time - t_0) / inter), 720 - 60 * dict[point.action]
+                    item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                    i += 1
+                else:
+                    brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
+                    xys = ((point.time - t_0) / inter), 720 - 60 * dict[point.action]
+                    item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                 item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                 item.setPen(pen)
                 item.setBrush(brush)
                 item.setToolTip(point.action+' '+ point.arg)
 
-    def select(self):
+
+    """def select(self):
         sel = {}
         for point in self.action:
             if point.action not in sel:
                 sel[point.action] = input(point.action +' ?'+ ' = Yes'+ ' '+'N = No'+' ')
-        return(sel)
+        return(sel)"""
 
+def change():
 
-
-
-    """def form(self):
-        forme = {}
-        for point in self.act:
-            if point.action not in forme:
-                forme[point.action] = FORME[input('i = ?')]
-        return(forme)"""
 
 def xy_coords(xy, width):
     dw = width / 2.

@@ -8,6 +8,7 @@ import lect_fichier
 import visu
 import inspector
 import zero
+import configuration
 
 
 MUSIC_FILE='essai_donnees_2.txt'
@@ -18,13 +19,20 @@ app = QtWidgets.QApplication([])
 
 # create the radar view and the time navigation interface
 ui=zero.Ui_FenetreG(act)
-View = visu.View(act,ui)
-col = View.color
+View = visu.View(act)
+FenetreG=QtWidgets.QMainWindow()
+ui.setupUi(FenetreG)
+col = zero.colour(ui)
 # create the inspector
-the_inspector_window = inspector.Inspector(View,act,col)
+the_inspector_window = inspector.Inspector(View,act,ui)
 # create a QDockWidget for the inspector
 the_inspector_dock = QtWidgets.QDockWidget()
 the_inspector_dock.setWidget(the_inspector_window)
+# create configuration
+MainWindow = QtWidgets.QMainWindow()
+ui2 = configuration.Ui_MainWindow(act)
+ui2.setupUi(MainWindow)
+MainWindow.show()
 # create the QMainWindow and add both widgets
 win = QtWidgets.QMainWindow()
 win.setWindowTitle("TIMELINE")

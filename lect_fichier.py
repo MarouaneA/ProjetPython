@@ -10,7 +10,7 @@ class Point(object):
         self.action=action
         self.arg=arg
     def __repr__(self):
-        return "<action.Point {0}>".format(self.name)
+        return "{0.action}".format(self)
 
 
 def load_actions(fichier):

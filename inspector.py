@@ -6,25 +6,25 @@ __author__ = 'veronhu'
 """
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QWidget, QListWidgetItem
-from zero import Ui_FenetreG
+import zero
 
 class Inspector(QWidget):
     """ Widget displaying information about a Flight """
 
-    def __init__(self,View,act,col):
+    def __init__(self,View,act,ui):
         super(Inspector, self).__init__()
 
         # sets up instance variables
         self.view = View
         self.action = act
-        self.color = col
-        self.ui_Inspector = Ui_FenetreG(act)
+        self.color = zero.colour(ui)
+        self.ui_Inspector = zero.Ui_FenetreG(act)
 
         # sets up the widget created with Qt Designer and pyuic
         self.ui_Inspector.setupUi(self)
         self.show()
 
-    def color(self):
+    """def color(self):
         k = 0
         for point in self.action:
             self.color[point.action] = self.list_cbbxC[k].currentText()
@@ -37,4 +37,4 @@ class Inspector(QWidget):
             if point.action not in form:
                 form[point.action] = self.list_cbbxF[k].currentText()
                 k += 1
-        return (form)
+        return (form)"""
