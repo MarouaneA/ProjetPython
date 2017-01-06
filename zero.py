@@ -13,6 +13,7 @@ class Ui_FenetreG(object):
         self.list_action = configuration.list_action(self.action)  # liste des actions sous forme de str
         self.list_label = []   # liste des Labels
 
+
     def setupUi(self, FenetreG):
         FenetreG.setObjectName("FenetreG")
         FenetreG.resize(600, 800)
@@ -162,20 +163,21 @@ class Ui_FenetreG(object):
         colour= self.color()
         colour[name]=evnt.currentText()"""
 
-def colour(ui):
-    colour = {}
-    k=0
-    for point in ui.action:
-        if point.action not in colour:
-            colour[point.action] = ui.list_cbbxC[k].currentText()
-            k += 1
-    for j in range(len(colour)):
-        ui.list_cbbxC[j].currentTextChanged.connect(lambda: changedC(ui,ui.list_action[j], ui.list_cbbxC[j]))
-    return colour
+    def colour(self):
+        colour = {}
+        k=0
+        for point in self.action:
+            if point.action not in colour:
+                colour[point.action] = self.list_cbbxC[k].currentText()
+                k += 1
+        for j in range(len(colour)):
+            self.list_cbbxC[j].currentTextChanged.connect(lambda: self.changedC(self,self.list_action[j], self.list_cbbxC[j]))
+        return colour
 
-def changedC(ui,name, evnt):
-    col = colour(ui)
-    col[name] = evnt.currentText()
+
+    def changedC(self,name, evnt):
+        col = self.colour()
+        col[name] = evnt.currentText()
 
     """def form(self):
         forms={}
@@ -217,7 +219,7 @@ if __name__ == "__main__":
     FenetreG = QtWidgets.QMainWindow()
     ui = Ui_FenetreG(act)
     ui.setupUi(FenetreG)
-    print(colour(ui))
+    print(ui.colour())
     print(form(ui))
     FenetreG.show()
     sys.exit(app.exec_())

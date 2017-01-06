@@ -17,7 +17,6 @@ class Inspector(QWidget):
         # sets up instance variables
         self.view = View
         self.action = act
-        self.color = zero.colour(ui)
         self.ui_Inspector = zero.Ui_FenetreG(act)
 
         # sets up the widget created with Qt Designer and pyuic

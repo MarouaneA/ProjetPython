@@ -16,24 +16,13 @@ n = len(COLORS)
 
 class View(QtWidgets.QWidget):
 
-    def __init__(self, act):
+    def __init__(self, act,col,selec):
         super(View, self).__init__()
         self.setWindowTitle('Timeline')
-        self.action =act
-        self.sel = self.select()
-
-
-        FenetreG = QtWidgets.QMainWindow()
-        ui = zero.Ui_FenetreG(act)
-        ui.setupUi(FenetreG)
-        self.color = zero.colour(ui)
-        self.form = zero.form(ui)
-
-        config = QtWidgets.QMainWindow()
-        ui2 = configuration.Ui_MainWindow(act)
-        ui2.setupUi(config)
-        self.selec=ui2.selec
-
+        self.action = act
+        self.color = col
+        #self.sel = self.select()
+        self.selec= selec
         self.grview = None
         self.scene = None
         self.entry = None
@@ -75,7 +64,7 @@ class View(QtWidgets.QWidget):
             button = QtWidgets.QPushButton(text)
             button.clicked.connect(slot)
             vbox.addWidget(button)
-        add_button ("split view", change)
+        add_button('Mise à jour SELECTION', lambda: self.draw_timeline())
         label_4 = QtWidgets.QLabel()
         label_4.setFrameShape(QtWidgets.QFrame.NoFrame)
         label_4.setObjectName("label_4")
@@ -116,8 +105,6 @@ class View(QtWidgets.QWidget):
             if point.action not in sel:
                 sel[point.action] = input(point.action +' ?'+ ' = Yes'+ ' '+'N = No'+' ')
         return(sel)"""
-
-def change():
 
 
 def xy_coords(xy, width):
