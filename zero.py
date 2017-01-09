@@ -12,7 +12,7 @@ class Ui_FenetreG(object):
         self.list_cbbxC = []   # liste des Combobox des différentes couleurs
         self.list_action = configuration.list_action(self.action)  # liste des actions sous forme de str
         self.list_label = []   # liste des Labels
-
+        self.color = initialisation(self)
 
     def setupUi(self, FenetreG):
         FenetreG.setObjectName("FenetreG")
@@ -43,10 +43,6 @@ class Ui_FenetreG(object):
         self.verticalLayout3.setObjectName("verticalLayout2")
         font = QtGui.QFont()
         font.setPointSize(9)
-
-
-
-
         for evnt in self.list_action:
             cbbxF = QtWidgets.QComboBox(self.verticalLayoutWidget)
             cbbxF.setFont(font)
@@ -56,7 +52,6 @@ class Ui_FenetreG(object):
             cbbxF.addItem("")
             self.list_cbbxF.append(cbbxF)
             self.verticalLayout.addWidget(cbbxF)
-
             cbbxC = QtWidgets.QComboBox(self.verticalLayoutWidget2)
             cbbxC.setFont(font)
             cbbxC.setGeometry(QtCore.QRect(220, 50, 91, 26))
@@ -85,6 +80,7 @@ class Ui_FenetreG(object):
             cbbxC.addItem("")
             cbbxC.addItem("")
             self.list_cbbxC.append(cbbxC)
+            print(evnt, self.list_cbbxC[-1].currentText())
             self.verticalLayout2.addWidget(cbbxC)
             Label = QtWidgets.QLabel(self.verticalLayoutWidget3)
             Label.setFont(font)
@@ -92,6 +88,7 @@ class Ui_FenetreG(object):
             Label.setText("")
             self.list_label.append(Label)
             self.verticalLayout3.addWidget(Label)
+
 
         #FenetreG.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(FenetreG)
@@ -105,7 +102,6 @@ class Ui_FenetreG(object):
         #FenetreG.setStatusBar(self.statusbar)
         self.menuFenetreG.addSeparator()
         self.menubar.addAction(self.menuFenetreG.menuAction())
-
         self.retranslateUi(FenetreG)
         QtCore.QMetaObject.connectSlotsByName(FenetreG)
 
@@ -147,6 +143,7 @@ class Ui_FenetreG(object):
                 self.list_label[k].setText(_translate("FenetreG", L[k]))
                 k+=1
 
+
     """def color(self):
         colour={}
         k = 0
@@ -157,27 +154,22 @@ class Ui_FenetreG(object):
         for j in range(len(colour)):
             self.list_cbbxC[j].currentTextChanged.connect(lambda: self.changedC(self.list_action[j],self.list_cbbxC[j]))
         return colour
-
-
     def changedC(self,name,evnt):
         colour= self.color()
         colour[name]=evnt.currentText()"""
 
-    def colour(self):
-        colour = {}
-        k=0
-        for point in self.action:
-            if point.action not in colour:
-                colour[point.action] = self.list_cbbxC[k].currentText()
-                k += 1
-        for j in range(len(colour)):
-            self.list_cbbxC[j].currentTextChanged.connect(lambda: self.changedC(self,self.list_action[j], self.list_cbbxC[j]))
-        return colour
+    def changedC(self,evnt,text):
+        self.color[evnt] = text
+        print(self.color)
 
-
-    def changedC(self,name, evnt):
-        col = self.colour()
-        col[name] = evnt.currentText()
+def initialisation(ui):
+    colour = {}
+    k = 0
+    for point in ui.action:
+        if point.action not in colour:
+            colour[point.action] = 'red'
+            k += 1
+    return colour
 
     """def form(self):
         forms={}
@@ -189,8 +181,6 @@ class Ui_FenetreG(object):
         for j in range(len(forms)):
             self.list_cbbxF[j].currentTextChanged.connect(lambda: self.changedF(self.list_action[j],self.list_cbbxF[j]))
         return forms
-
-
     def changedF(self,name,evnt):
         forms= self.form()
         forms[name]=evnt.currentText()"""
@@ -219,7 +209,7 @@ if __name__ == "__main__":
     FenetreG = QtWidgets.QMainWindow()
     ui = Ui_FenetreG(act)
     ui.setupUi(FenetreG)
-    print(ui.colour())
+    print(ui.color)
     print(form(ui))
     FenetreG.show()
     sys.exit(app.exec_())

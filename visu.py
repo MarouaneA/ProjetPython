@@ -75,6 +75,7 @@ class View(QtWidgets.QWidget):
         self.scene.addItem(timeline_group)
         timeline_group.setZValue(0)
         pen = QtGui.QPen(QtCore.Qt.transparent)
+        pen_black = QtGui.QPen(QtCore.Qt.gray)
         width = 30
         i = 0
         t_0 = self.action[0].time
@@ -86,8 +87,10 @@ class View(QtWidgets.QWidget):
                 if point.action not in dict:
                     dict[point.action] = i
                     brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
-                    xys = ((point.time - t_0) / inter), 720 - 60 * dict[point.action]
+                    y = 720 - 60 * dict[point.action]
+                    xys = ((point.time - t_0) / inter), y
                     item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                    line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter),timeline_group)
                     i += 1
                 else:
                     brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
@@ -95,6 +98,7 @@ class View(QtWidgets.QWidget):
                     item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                 item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                 item.setPen(pen)
+                line.setPen(pen_black)
                 item.setBrush(brush)
                 item.setToolTip(point.action+' '+ point.arg)
 
@@ -110,3 +114,6 @@ class View(QtWidgets.QWidget):
 def xy_coords(xy, width):
     dw = width / 2.
     return QtCore.QRectF(xy[0] - dw, xy[1] - dw, width/15, width)
+
+def xy_line(xy, inter):
+    return QtCore.QRectF(-50 , xy[1], inter*8, 1)

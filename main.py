@@ -25,7 +25,7 @@ MainWindow = QtWidgets.QMainWindow()
 ui2 = configuration.Ui_MainWindow(act)
 ui2.setupUi(MainWindow)
 selec = ui2.selec
-col = ui.colour()
+col = ui.color
 View = visu.View(act,col,selec)
 # create the inspector
 the_inspector_window = inspector.Inspector(View,act,ui)
