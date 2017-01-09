@@ -21,11 +21,11 @@ app = QtWidgets.QApplication([])
 ui=zero.Ui_FenetreG(act)
 FenetreG=QtWidgets.QMainWindow()
 ui.setupUi(FenetreG)
-MainWindow = QtWidgets.QMainWindow()
+col = ui.color
 ui2 = configuration.Ui_MainWindow(act)
+MainWindow = QtWidgets.QMainWindow()
 ui2.setupUi(MainWindow)
 selec = ui2.selec
-col = ui.color
 View = visu.View(act,col,selec)
 # create the inspector
 the_inspector_window = inspector.Inspector(View,act,ui)

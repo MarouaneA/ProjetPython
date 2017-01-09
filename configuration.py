@@ -36,8 +36,6 @@ class Ui_MainWindow(object):
             chkbx.stateChanged.connect(lambda state=0,chkbx=chkbx : dict_evnt(self,state,chkbx))
             self.list_chkbx.append(chkbx)
             self.verticalLayout.addWidget(chkbx)
-
-
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 703, 25))

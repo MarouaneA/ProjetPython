@@ -21,7 +21,6 @@ class View(QtWidgets.QWidget):
         self.setWindowTitle('Timeline')
         self.action = act
         self.color = col
-        #self.sel = self.select()
         self.selec= selec
         self.grview = None
         self.scene = None
@@ -40,7 +39,6 @@ class View(QtWidgets.QWidget):
         self.grview.setTransformationAnchor(self.grview.AnchorUnderMouse)
         factor = math.pow(1.001, event.angleDelta().y())
         self.grview.scale(factor, 1)
-
 
     def zoom_time(self,value):
         self.draw_timeline(self,value)
@@ -75,8 +73,8 @@ class View(QtWidgets.QWidget):
         self.scene.addItem(timeline_group)
         timeline_group.setZValue(0)
         pen = QtGui.QPen(QtCore.Qt.transparent)
-        pen_black = QtGui.QPen(QtCore.Qt.gray)
-        width = 30
+        pen_grey = QtGui.QPen(QtCore.Qt.gray)
+        width = 40
         i = 0
         t_0 = self.action[0].time
         t_f = self.action[-1].time
@@ -87,18 +85,18 @@ class View(QtWidgets.QWidget):
                 if point.action not in dict:
                     dict[point.action] = i
                     brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
-                    y = 720 - 60 * dict[point.action]
+                    y = - 60 * dict[point.action]
                     xys = ((point.time - t_0) / inter), y
                     item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                     line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter),timeline_group)
                     i += 1
                 else:
                     brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
-                    xys = ((point.time - t_0) / inter), 720 - 60 * dict[point.action]
+                    xys = ((point.time - t_0) / inter), - 60 * dict[point.action]
                     item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                 item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                 item.setPen(pen)
-                line.setPen(pen_black)
+                line.setPen(pen_grey)
                 item.setBrush(brush)
                 item.setToolTip(point.action+' '+ point.arg)
 
@@ -112,8 +110,8 @@ class View(QtWidgets.QWidget):
 
 
 def xy_coords(xy, width):
-    dw = width / 2.
+    dw = width / 3
     return QtCore.QRectF(xy[0] - dw, xy[1] - dw, width/15, width)
 
 def xy_line(xy, inter):
-    return QtCore.QRectF(-50 , xy[1], inter*8, 1)
+    return QtCore.QRectF(-50 , xy[1], (inter*8)+50, 1)

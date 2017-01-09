@@ -80,7 +80,6 @@ class Ui_FenetreG(object):
             cbbxC.addItem("")
             cbbxC.addItem("")
             self.list_cbbxC.append(cbbxC)
-            print(evnt, self.list_cbbxC[-1].currentText())
             self.verticalLayout2.addWidget(cbbxC)
             Label = QtWidgets.QLabel(self.verticalLayoutWidget3)
             Label.setFont(font)
@@ -88,6 +87,10 @@ class Ui_FenetreG(object):
             Label.setText("")
             self.list_label.append(Label)
             self.verticalLayout3.addWidget(Label)
+            cbbxC.currentTextChanged.connect(lambda : self.changedC1())
+
+
+
 
 
         #FenetreG.setCentralWidget(self.centralwidget)
@@ -161,6 +164,11 @@ class Ui_FenetreG(object):
     def changedC(self,evnt,text):
         self.color[evnt] = text
         print(self.color)
+
+    def changedC1(self):
+        t = tuple((p.currentText()) for p in self.list_cbbxC)
+        for i in range(len(t)):
+            self.color[self.list_action[i]]= t[i]
 
 def initialisation(ui):
     colour = {}
