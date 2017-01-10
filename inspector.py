@@ -11,7 +11,7 @@ import zero
 class Inspector(QWidget):
     """ Widget displaying information about a Flight """
 
-    def __init__(self,View,act,ui):
+    def __init__(self,View,act):
         super(Inspector, self).__init__()
 
         # sets up instance variables

@@ -16,11 +16,11 @@ n = len(COLORS)
 
 class View(QtWidgets.QWidget):
 
-    def __init__(self, act,col,selec):
+    def __init__(self, act,ui,selec):
         super(View, self).__init__()
         self.setWindowTitle('Timeline')
         self.action = act
-        self.color = col
+        self.color = ui.color
         self.selec= selec
         self.grview = None
         self.scene = None

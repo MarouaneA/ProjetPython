@@ -21,25 +21,22 @@ app = QtWidgets.QApplication([])
 ui=zero.Ui_FenetreG(act)
 FenetreG=QtWidgets.QMainWindow()
 ui.setupUi(FenetreG)
-col = ui.color
 ui2 = configuration.Ui_MainWindow(act)
 MainWindow = QtWidgets.QMainWindow()
 ui2.setupUi(MainWindow)
 selec = ui2.selec
-View = visu.View(act,col,selec)
-# create the inspector
-the_inspector_window = inspector.Inspector(View,act,ui)
-# create a QDockWidget for the inspector
-the_inspector_dock = QtWidgets.QDockWidget()
-the_inspector_dock.setWidget(the_inspector_window)
+View = visu.View(act,ui,selec)
+
+
 # create configuration
 
 MainWindow.show()
+FenetreG.show()
 # create the QMainWindow and add both widgets
 win = QtWidgets.QMainWindow()
 win.setWindowTitle("TIMELINE")
 win.setCentralWidget(View)
-win.addDockWidget(QtCore.Qt.DockWidgetArea(1), the_inspector_dock)
+#win.addDockWidget(QtCore.Qt.DockWidgetArea(1), the_inspector_dock)
 win.resize(1280, 720)
 win.show()
 
