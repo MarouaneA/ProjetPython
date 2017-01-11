@@ -66,6 +66,7 @@ class Ui_MainWindow(object):
             self.comboBox_form.currentTextChanged.connect(lambda state, action=action : change_form(self, state, action))
             self.horizontalLayout.addWidget(self.comboBox_form)
             self.list_comboBox_form.append(self.comboBox_form)
+
             self.verticalLayout.addLayout(self.horizontalLayout)
 
 
@@ -87,7 +88,6 @@ class Ui_MainWindow(object):
         for k in range(len(self.list_action_differente)):
             n = len(COLORS)
             r = k // n  #dicision euclidienne
-            #print(n, k, r)
             self.list_label[k].setText(_translate("MainWindow", self.list_action_differente[k]))
             for i in range(k, n):
                     self.list_comboBox_colour[k].setItemText(i-k, _translate("MainWindow", COLORS[i%n]))
@@ -99,22 +99,16 @@ class Ui_MainWindow(object):
 
 def initialisation(ui):
     selec_color_form={}
-    k = 0
-    for action in ui.list_action_differente:
-        selec_color_form[action]=[COLORS[k%len(ui.list_action_differente)], FORME[0]]
-        k+=1
+    n = len(COLORS)
+    for k, action in enumerate(ui.list_action_differente):
+        selec_color_form[action]=[COLORS[k%n], FORME[0]]
     return selec_color_form
 
 def change_colour(ui, state, action):
     ui.selec_un[action][0] = state
-    #print(action, state)
-    #print(ui.selec_un)
 
 def change_form(ui, state, action):
     ui.selec_un[action][1] = state
-    #print(action, state)
-    #print(ui.selec_un)
-
 
 
 if __name__ == "__main__":
@@ -123,6 +117,5 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow(fichier)
     ui.setupUi(MainWindow)
-    #print(initialisation(ui))
     MainWindow.show()
     sys.exit(app.exec_())
