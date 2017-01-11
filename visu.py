@@ -48,7 +48,7 @@ class View(QtWidgets.QWidget):
         self.grview.setDragMode(QtWidgets.QGraphicsView.ScrollHandDrag)
         self.grview.setRenderHint(QtGui.QPainter.Antialiasing)
         self.grview.wheelEvent = lambda event: self.zoom_view_mouse(event)
-        self.grview.scale(1, -1)
+        self.grview.scale(1, 1)
         vbox.addWidget(self.grview)
         self.draw_timeline()
         self.grview.fitInView(self.grview.sceneRect(), QtCore.Qt.KeepAspectRatio)
@@ -57,7 +57,7 @@ class View(QtWidgets.QWidget):
             button = QtWidgets.QPushButton(text)
             button.clicked.connect(slot)
             vbox.addWidget(button)
-        add_button('Mise à jour SELECTION', lambda: self.draw_timeline())
+        add_button('Mise à jour', lambda: self.draw_timeline())
         label_4 = QtWidgets.QLabel()
         label_4.setFrameShape(QtWidgets.QFrame.NoFrame)
         label_4.setObjectName("label_4")
@@ -69,7 +69,7 @@ class View(QtWidgets.QWidget):
         timeline_group.setZValue(0)
         pen = QtGui.QPen(QtCore.Qt.transparent)
         pen_grey = QtGui.QPen(QtCore.Qt.gray)
-        width = 40
+        width = 60
         i = 0
         t_0 = self.action[0].time
         t_f = self.action[-1].time
@@ -80,17 +80,24 @@ class View(QtWidgets.QWidget):
                 if point.action not in dict:
                     dict[point.action] = i
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
-                    y = - 60 * dict[point.action]
+                    y = 100 * dict[point.action]
                     xys = ((point.time - t_0) / inter), y
                     line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter),timeline_group)
-                    i += 1
+                    label = QtWidgets.QLabel(point.action)
+                    label_2 = QtWidgets.QLabel(point.action)
+                    label.setGeometry(-300,100 * i,250,15)
+                    self.scene.addWidget(label)
+                    label_2.setGeometry(inter * 8, 100 * i, 250, 15)
+                    self.scene.addWidget(label_2)
+                    i+= 1
+
                     if self.color_form[point.action][1] == 'Rectangle':
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                     else:
                         item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
                 else:
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
-                    xys = ((point.time - t_0) / inter), - 60 * dict[point.action]
+                    xys = ((point.time - t_0) / inter), 100 * dict[point.action]
                     if self.color_form[point.action][1] == 'Rectangle':
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                     else:
@@ -99,14 +106,6 @@ class View(QtWidgets.QWidget):
                 line.setPen(pen_grey)
                 item.setBrush(brush)
                 item.setToolTip(point.action+' '+ point.arg)
-
-
-    """def select(self):
-        sel = {}
-        for point in self.action:
-            if point.action not in sel:
-                sel[point.action] = input(point.action +' ?'+ ' = Yes'+ ' '+'N = No'+' ')
-        return(sel)"""
 
 
 def xy_coords(xy, width):

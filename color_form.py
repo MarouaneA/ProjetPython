@@ -66,7 +66,6 @@ class Ui_MainWindow(object):
             self.comboBox_form.currentTextChanged.connect(lambda state, action=action : change_form(self, state, action))
             self.horizontalLayout.addWidget(self.comboBox_form)
             self.list_comboBox_form.append(self.comboBox_form)
-
             self.verticalLayout.addLayout(self.horizontalLayout)
 
 

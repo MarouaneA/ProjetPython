@@ -62,10 +62,10 @@ def initialisation(Ui_MainWindow):
 
 def dict_evnt(ui, state, evnt):
     if state == 0 :
-        print(evnt.text() + " is deselected")
+        #print(evnt.text() + " is deselected")
         ui.selec[evnt.text()] = "deselected"
     else :
-        print(evnt.text() + " is selected")
+        #print(evnt.text() + " is selected")
         ui.selec[evnt.text()] = "selected"
 
 

@@ -23,17 +23,3 @@ class Inspector(QWidget):
         self.ui_Inspector.setupUi(self)
         self.show()
 
-    """def color(self):
-        k = 0
-        for point in self.action:
-            self.color[point.action] = self.list_cbbxC[k].currentText()
-            k += 1
-
-    def form(self):
-        form = {}
-        k = 0
-        for point in self.action:
-            if point.action not in form:
-                form[point.action] = self.list_cbbxF[k].currentText()
-                k += 1
-        return (form)"""
