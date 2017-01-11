@@ -7,25 +7,26 @@ from PyQt5 import QtWidgets, QtCore
 import lect_fichier
 import visu
 import inspector
-import zero
+import color_form
 import configuration
 
 
 MUSIC_FILE='essai_donnees_2.txt'
-act= lect_fichier.load_actions(MUSIC_FILE)
+act= lect_fichier.load_actions(MUSIC_FILE)[0]
 
 # Initialize Qt
 app = QtWidgets.QApplication([])
 
 # create the radar view and the time navigation interface
-ui=zero.Ui_FenetreG(act)
+ui=color_form.Ui_MainWindow(MUSIC_FILE)
 FenetreG=QtWidgets.QMainWindow()
 ui.setupUi(FenetreG)
-ui2 = configuration.Ui_MainWindow(act)
+color_forme = ui.selec_un
+ui2 = configuration.Ui_MainWindow(MUSIC_FILE)
 MainWindow = QtWidgets.QMainWindow()
 ui2.setupUi(MainWindow)
 selec = ui2.selec
-View = visu.View(act,ui,selec)
+View = visu.View(act,color_forme,selec)
 
 
 # create configuration

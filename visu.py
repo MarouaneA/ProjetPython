@@ -5,22 +5,17 @@ import math
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QWheelEvent
-import zero
-import configuration
 
-COLORS = ['red', 'orange', 'blue', 'green', 'magenta', 'cyan', 'lime', 'purple', 'silver', 'indigo', 'maroon',
-          'olive', 'navy', 'goldenrod', 'teal', 'darkorange' 'crimson', 'seagreen', 'steelblue', 'lightcoral',
-          'grey', 'black', 'orangered']
-FORME = ['R','E','C']
-n = len(COLORS)
+
+
 
 class View(QtWidgets.QWidget):
 
-    def __init__(self, act,ui,selec):
+    def __init__(self, act,color_form,selec):
         super(View, self).__init__()
         self.setWindowTitle('Timeline')
         self.action = act
-        self.color = ui.color
+        self.color_form = color_form
         self.selec= selec
         self.grview = None
         self.scene = None
@@ -84,17 +79,22 @@ class View(QtWidgets.QWidget):
             if self.selec[point.action] == 'selected':
                 if point.action not in dict:
                     dict[point.action] = i
-                    brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
+                    brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
                     y = - 60 * dict[point.action]
                     xys = ((point.time - t_0) / inter), y
-                    item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                     line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter),timeline_group)
                     i += 1
+                    if self.color_form[point.action][1] == 'Rectangle':
+                        item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                    else:
+                        item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
                 else:
-                    brush = QtGui.QBrush(QtGui.QColor(self.color[point.action]))
+                    brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
                     xys = ((point.time - t_0) / inter), - 60 * dict[point.action]
-                    item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
-                item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                    if self.color_form[point.action][1] == 'Rectangle':
+                        item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                    else:
+                        item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
                 item.setPen(pen)
                 line.setPen(pen_grey)
                 item.setBrush(brush)
@@ -111,7 +111,10 @@ class View(QtWidgets.QWidget):
 
 def xy_coords(xy, width):
     dw = width / 3
-    return QtCore.QRectF(xy[0] - dw, xy[1] - dw, width/15, width)
+    return QtCore.QRectF(xy[0] - dw, xy[1]-dw/3, width/3, width/3)
+
+
+
 
 def xy_line(xy, inter):
     return QtCore.QRectF(-50 , xy[1], (inter*8)+50, 1)

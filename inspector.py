@@ -6,7 +6,7 @@ __author__ = 'veronhu'
 """
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QWidget, QListWidgetItem
-import zero
+
 
 class Inspector(QWidget):
     """ Widget displaying information about a Flight """
