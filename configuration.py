@@ -14,11 +14,11 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(703, 686)
+        MainWindow.resize(500, 650)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(150, 50, 581, 481))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(50, 50, 400, 550))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -32,6 +32,21 @@ class Ui_MainWindow(object):
             chkbx.stateChanged.connect(lambda state=0, chkbx=chkbx : dict_evnt(self,state,chkbx))
             self.list_chkbx.append(chkbx)
             self.verticalLayout.addWidget(chkbx)
+
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.pushButton_save = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_save.setObjectName("Save Configuration")
+        self.pushButton_save.clicked.connect(lambda : self.save())
+        self.horizontalLayout.addWidget(self.pushButton_save)
+        self.pushButton_load = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_load.setObjectName("Load Configuration")
+        self.pushButton_load.clicked.connect(lambda : self.load())
+        self.horizontalLayout.addWidget(self.pushButton_load)
+        self.verticalLayout.addWidget(self.horizontalLayoutWidget)
 
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -51,6 +66,32 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Select Configuration"))
         for k in range(len(self.list_action)):
             self.list_chkbx[k].setText(_translate("MainWindow", self.list_action[k]))
+        self.pushButton_save.setText(_translate("MainWindow", "Save Configuration"))
+        self.pushButton_load.setText(_translate("MainWindow", "Load Configuration"))
+
+    def save(self):
+        nom_fichier = input('Nom de la configuration que vous voulez sauvergarder ?')
+        fic = open(str(nom_fichier), 'w')
+        for evnt in self.list_action:
+            fic.write(str(evnt)+'    '+self.selec[evnt]+'\n')
+        return ()
+
+    def load(self):
+        nom_fichier = input('Nom du fichier de la configuration que vous voulez charger ?')
+        dic = {}
+        k = 0
+        with open(nom_fichier, 'r') as f:
+            for line in f:
+                list = line.split()
+                dic[list[0]] = list[1]
+                self.list_chkbx[k].toggle()
+                if list[1] == 'selected':
+                    self.list_chkbx[k].setChecked(True)
+                else:
+                    self.list_chkbx[k].setChecked(False)
+                k += 1
+        self.selec = dic
+        return ()
 
 
 
@@ -67,7 +108,6 @@ def dict_evnt(ui, state, evnt):
     else :
         #print(evnt.text() + " is selected")
         ui.selec[evnt.text()] = "selected"
-
 
 
 
