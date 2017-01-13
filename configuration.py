@@ -3,36 +3,49 @@ import sys
 import lect_fichier
 
 FICHIER = "essai_donnees.txt"
+FICHIER_2 = "essai_donnees_2.txt"
+
+
 
 class Ui_MainWindow(object):
 
     def __init__(self, fichier):
-        #self.action = lect_fichierbiss.load_actions(fichier)[0]
         self.list_chkbx = []   # liste des Checkbox créées qui contiennent les différentes actions
+        self.list_chkbx_join1 = []   # liste 1 des Checkbox créées pour faire des 'join'
+        self.list_chkbx_join2 = []   # liste 2 des Checkbox créées pour faire des 'join'
         self.list_action = lect_fichier.load_actions(fichier)[1]  # liste des actions differentes sous forme de str
-        self.selec=initialisation(self)
+        self.selec = initialisation(self)
+        self.selec_join = initialisation(self)
+        self.selec_join2 = initialisation(self)
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(500, 650)
+        MainWindow.resize(700, 650)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
+        # selection des actions
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(50, 50, 400, 550))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 40, 400, 550))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label.setObjectName("select")
+        self.label.setFont(font)
+        self.verticalLayout.addWidget(self.label)
         for evnt in self.list_action:
             chkbx = QtWidgets.QCheckBox(self.verticalLayoutWidget)
             chkbx.setObjectName(evnt)
             chkbx.toggle()  # initialise l'état de la Checkbox à 'sélectionnée'
             # state (1er argument) : argument obligatoire de la méthode stateChanged + nécessité de mettre chkbx=chkbx
             # sinon la fonction n'évalue que le dernier de la boucle 'for' ( il faut définir des variables indépendantes)
-            chkbx.stateChanged.connect(lambda state=0, chkbx=chkbx : dict_evnt(self,state,chkbx))
+            chkbx.stateChanged.connect(lambda state=0, evnt=evnt : dict_evnt(self,state,evnt))
             self.list_chkbx.append(chkbx)
             self.verticalLayout.addWidget(chkbx)
-
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
@@ -47,6 +60,71 @@ class Ui_MainWindow(object):
         self.pushButton_load.clicked.connect(lambda : self.load())
         self.horizontalLayout.addWidget(self.pushButton_load)
         self.verticalLayout.addWidget(self.horizontalLayoutWidget)
+
+
+        # mixe les actions selectionner : join
+        self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(460, 40, 90, 550))
+        self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setObjectName("verticalLayout")
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_2 = QtWidgets.QLabel(self.verticalLayoutWidget_2)
+        self.label_2.setObjectName("join")
+        self.label_2.setFont(font)
+        self.verticalLayout_2.addWidget(self.label_2)
+        for evnt in self.list_action:
+            chkbx = QtWidgets.QCheckBox(self.verticalLayoutWidget_2)
+            chkbx.setObjectName(evnt)
+            # state (1er argument) : argument obligatoire de la méthode stateChanged + nécessité de mettre chkbx=chkbx
+            # sinon la fonction n'évalue que le dernier de la boucle 'for' ( il faut définir des variables indépendantes)
+            chkbx.stateChanged.connect(lambda state=0, evnt=evnt : dict_join(self.selec_join ,state,evnt))
+            self.list_chkbx_join1.append(chkbx)
+            self.verticalLayout_2.addWidget(chkbx)
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.pushButton_join = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_join.setObjectName("buttonjoin")
+        self.pushButton_join.clicked.connect(lambda : join1(self))
+        self.horizontalLayout.addWidget(self.pushButton_join)
+        self.verticalLayout_2.addWidget(self.horizontalLayoutWidget)
+
+        # autre : mixe les actions selectionner : join
+        self.verticalLayoutWidget_3 = QtWidgets.QWidget(self.centralwidget)
+        self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(570, 40, 90, 550))
+        self.verticalLayoutWidget_3.setObjectName("verticalLayoutWidget_3")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_3)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setObjectName("verticalLayout3")
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_3 = QtWidgets.QLabel(self.verticalLayoutWidget_3)
+        self.label_3.setObjectName("join")
+        self.label_3.setFont(font)
+        self.verticalLayout_3.addWidget(self.label_3)
+        for evnt in self.list_action:
+            chkbx = QtWidgets.QCheckBox(self.verticalLayoutWidget_3)
+            chkbx.setObjectName(evnt)
+            # state (1er argument) : argument obligatoire de la méthode stateChanged + nécessité de mettre chkbx=chkbx
+            # sinon la fonction n'évalue que le dernier de la boucle 'for' ( il faut définir des variables indépendantes)
+            chkbx.stateChanged.connect(lambda state=0, evnt=evnt: dict_join(self.selec_join2, state, evnt))
+            self.list_chkbx_join2.append(chkbx)
+            self.verticalLayout_3.addWidget(chkbx)
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.pushButton_join2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_join2.setObjectName("buttonjoin")
+        self.pushButton_join2.clicked.connect(lambda : join2(self))
+        self.horizontalLayout.addWidget(self.pushButton_join2)
+        self.verticalLayout_3.addWidget(self.horizontalLayoutWidget)
 
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -68,47 +146,83 @@ class Ui_MainWindow(object):
             self.list_chkbx[k].setText(_translate("MainWindow", self.list_action[k]))
         self.pushButton_save.setText(_translate("MainWindow", "Save Configuration"))
         self.pushButton_load.setText(_translate("MainWindow", "Load Configuration"))
+        self.pushButton_join.setText(_translate("MainWindow", "Reset"))
+        self.pushButton_join2.setText(_translate("MainWindow", "Reset"))
+        self.label.setText(_translate("MainWindow", 'Select action'))
+        self.label_2.setText(_translate("MainWindow", 'Join action'))
+        self.label_3.setText(_translate("MainWindow", 'Join action'))
+
 
     def save(self):
-        nom_fichier = input('Nom de la configuration que vous voulez sauvergarder ?')
+        nom_fichier = input('Nom du fichier de la configuration que vous voulez sauvergarder ?')
         fic = open(str(nom_fichier), 'w')
         for evnt in self.list_action:
+            # écrit : 'action  selected/deselected'
             fic.write(str(evnt)+'    '+self.selec[evnt]+'\n')
-        return ()
+        fic.close()
 
     def load(self):
         nom_fichier = input('Nom du fichier de la configuration que vous voulez charger ?')
         dic = {}
+        list_sel, list_unsel = [], []
         k = 0
+        pb = 0
         with open(nom_fichier, 'r') as f:
             for line in f:
                 list = line.split()
-                dic[list[0]] = list[1]
-                self.list_chkbx[k].toggle()
-                if list[1] == 'selected':
-                    self.list_chkbx[k].setChecked(True)
-                else:
-                    self.list_chkbx[k].setChecked(False)
+                if list[0] != self.list_action[k]:
+                    pb = 1 # relève un problème qui signifie que ce n'est pas le bon fichier
+                else :
+                    dic[list[0]] = list[1]
+                    if list[1] == 'selected':
+                        list_sel.append(self.list_chkbx[k]) # liste des checkbox selectionnées
+                    else:
+                        list_unsel.append(self.list_chkbx[k]) # # liste des checkbox déselectionnées
                 k += 1
-        self.selec = dic
-        return ()
+        if pb == 0 : # cad pas de problème de fichier
+            # on change l'état des checkbox après la lecture du fichier pour ne pas modifier en cas de problème
+            for chkbx in list_sel :
+                chkbx.setChecked(True)
+            for chkbx in list_unsel :
+                chkbx.setChecked(False)
+            self.selec = dic
+        else :
+            print('Selection no load because it is not the selection of the right file')
 
 
 
-def initialisation(Ui_MainWindow):
+def initialisation(ui):
     selec={}
-    for point in Ui_MainWindow.list_action:
-        selec[point]="selected"
+    for action in ui.list_action:
+        selec[action]="selected"
     return selec
+
 
 def dict_evnt(ui, state, evnt):
     if state == 0 :
-        #print(evnt.text() + " is deselected")
-        ui.selec[evnt.text()] = "deselected"
+        ui.selec[evnt] = "deselected"
     else :
-        #print(evnt.text() + " is selected")
-        ui.selec[evnt.text()] = "selected"
+        ui.selec[evnt] = "selected"
 
+
+def dict_join(selec_joini, state, evnt):
+    if state == 2 :
+        selec_joini[evnt] = 'join'
+    else :
+        selec_joini[evnt] = 'selected'
+
+def join1(ui):
+    for k, chkbx in enumerate(ui.list_chkbx_join1):
+       if chkbx.checkState() == 2:
+            chkbx.setChecked(False)
+            ui.selec_join[ui.list_action[k]] = "selected"
+
+
+def join2(ui):
+    for k, chkbx in enumerate(ui.list_chkbx_join2):
+       if chkbx.checkState() == 2:
+            chkbx.setChecked(False)
+            ui.selec_join2[ui.list_action[k]] = "selected"
 
 
 if __name__ == "__main__":
