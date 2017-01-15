@@ -11,18 +11,22 @@ from PyQt5.QtGui import QWheelEvent
 
 class View(QtWidgets.QWidget):
 
-    def __init__(self, act,color_form,selec):
+    def __init__(self, act,color_form,selec,selec_join,selec_join2):
         super(View, self).__init__()
         self.setWindowTitle('Timeline')
         self.action = act
         self.color_form = color_form
         self.selec= selec
+        self.selec_join = selec_join
+        self.selec_join2 = selec_join2
         self.grview = None
         self.scene = None
         self.entry = None
         self.build_interface()
         self.draw_timeline()
         self.dep_time = act[0].time
+        self.valeur = 0
+        self.premier=0
 
 
     @QtCore.pyqtSlot(int)
@@ -41,6 +45,31 @@ class View(QtWidgets.QWidget):
 
 
     def build_interface(self):
+        def add_button(text, slot):
+            """adds a button to the hbox and connects the slot"""
+            button = QtWidgets.QPushButton(text)
+            button.clicked.connect(slot)
+            vbox.addWidget(button)
+        slider = QtWidgets.QSlider()
+        slider.setGeometry(QtCore.QRect(0, 0, 50, 800))
+        slider.setOrientation(QtCore.Qt.Horizontal)
+        slider.setObjectName("verticalScrollBar")
+        def fonction_lambda(self,slider):
+            if self.valeur ==0 and self.premier == 0 :
+                self.valeur=slider.value()
+                self.premier = 1
+                self.valeur = slider.value()
+                self.zoom_view((self.valeur+50)/50)
+            else :
+                self.zoom_view(1/((self.valeur+50)/50))
+                print(1/((self.valeur+50)/50))
+                self.valeur=slider.value()
+                self.zoom_view((self.valeur+50)/50)
+                print((self.valeur+50)/50)
+
+
+
+        slider.sliderReleased.connect(lambda: fonction_lambda(self,slider))
         vbox = QtWidgets.QVBoxLayout(self)
         self.grview = QtWidgets.QGraphicsView()
         self.scene = QtWidgets.QGraphicsScene()
@@ -50,13 +79,9 @@ class View(QtWidgets.QWidget):
         self.grview.wheelEvent = lambda event: self.zoom_view_mouse(event)
         self.grview.scale(1, 1)
         vbox.addWidget(self.grview)
+        vbox.addWidget(slider)
         self.draw_timeline()
         self.grview.fitInView(self.grview.sceneRect(), QtCore.Qt.KeepAspectRatio)
-        def add_button(text, slot):
-            """adds a button to the hbox and connects the slot"""
-            button = QtWidgets.QPushButton(text)
-            button.clicked.connect(slot)
-            vbox.addWidget(button)
         add_button('Mise à jour', lambda: self.draw_timeline())
         label_4 = QtWidgets.QLabel()
         label_4.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -70,14 +95,46 @@ class View(QtWidgets.QWidget):
         pen = QtGui.QPen(QtCore.Qt.transparent)
         pen_grey = QtGui.QPen(QtCore.Qt.gray)
         width = 60
-        i = 0
+        i = 2
         t_0 = self.action[0].time
         t_f = self.action[-1].time
         inter= (t_f - t_0)/2000
         dict={}
         for point in self.action:
             if self.selec[point.action] == 'selected':
-                if point.action not in dict:
+                if self.selec_join[point.action] == 'join':
+                    dict[point.action] = 0
+                    brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
+                    y = 100 * dict[point.action]
+                    xys = ((point.time - t_0) / inter), y
+                    line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter), timeline_group)
+                    label = QtWidgets.QLabel(point.action)
+                    label_2 = QtWidgets.QLabel(point.action)
+                    label.setGeometry(-300, 100 * i, 250, 15)
+                    self.scene.addWidget(label)
+                    label_2.setGeometry(inter * 8, 100 * i, 250, 15)
+                    self.scene.addWidget(label_2)
+                    if self.color_form[point.action][1] == 'Rectangle':
+                        item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                    else:
+                        item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
+                elif self.selec_join2[point.action] == 'join':
+                    dict[point.action] = 1
+                    brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
+                    y = 100 * dict[point.action]
+                    xys = ((point.time - t_0) / inter), y
+                    line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter), timeline_group)
+                    label = QtWidgets.QLabel(point.action)
+                    label_2 = QtWidgets.QLabel(point.action)
+                    label.setGeometry(-300, 100 * i, 250, 15)
+                    self.scene.addWidget(label)
+                    label_2.setGeometry(inter * 8, 100 * i, 250, 15)
+                    self.scene.addWidget(label_2)
+                    if self.color_form[point.action][1] == 'Rectangle':
+                        item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
+                    else:
+                        item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
+                elif point.action not in dict:
                     dict[point.action] = i
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
                     y = 100 * dict[point.action]

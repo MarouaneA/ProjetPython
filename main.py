@@ -26,7 +26,9 @@ ui2 = configuration.Ui_MainWindow(MUSIC_FILE)
 MainWindow = QtWidgets.QMainWindow()
 ui2.setupUi(MainWindow)
 selec = ui2.selec
-View = visu.View(act,color_forme,selec)
+selec_join = ui2.selec_join
+selec_join2 = ui2.selec_join2
+View = visu.View(act,color_forme,selec,selec_join,selec_join2)
 
 
 # create configuration
@@ -37,6 +39,10 @@ FenetreG.show()
 win = QtWidgets.QMainWindow()
 win.setWindowTitle("TIMELINE")
 win.setCentralWidget(View)
+the_inspector_dock3 = QtWidgets.QDockWidget()
+the_inspector_window3 = inspector.Inspector3()
+the_inspector_dock3.setWidget(the_inspector_window3)
+win.addDockWidget(2, the_inspector_dock3)
 #win.addDockWidget(QtCore.Qt.DockWidgetArea(1), the_inspector_dock)
 win.resize(1280, 720)
 win.show()
