@@ -89,7 +89,7 @@ class View(QtWidgets.QWidget):
 
     def draw_timeline(self):
         self.scene.clear()
-        timeline_group = QtWidgets.QGraphicsItemGroup()
+        timeline_group = QtWidgets.QGraphicsRectItem()
         self.scene.addItem(timeline_group)
         timeline_group.setZValue(0)
         pen = QtGui.QPen(QtCore.Qt.transparent)
@@ -159,6 +159,17 @@ class View(QtWidgets.QWidget):
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                     else:
                         item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
+
+                #Nécessaire pour que le timeline_group.hoverEnterEvent fonctionne
+                item.setAcceptHoverEvents(True)
+                def mouseEnterQGraphics(event, item = item, width = width, xys = xys):
+                  item.setRect(xy_coords(xys, width * 5))
+                def mouseExitQGraphics(event, item = item, width = width, xys = xys):
+                  item.setRect(xy_coords(xys, width))
+
+                item.hoverEnterEvent = mouseEnterQGraphics
+                item.hoverLeaveEvent = mouseExitQGraphics
+
                 item.setPen(pen)
                 line.setPen(pen_grey)
                 item.setBrush(brush)
