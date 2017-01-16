@@ -5,8 +5,8 @@ import sys
 
 from PyQt5 import QtWidgets, QtCore
 import lect_fichier
-import visu1
-import inspector1
+import visu
+import inspector
 import color_form
 import configuration
 
@@ -17,9 +17,9 @@ act= lect_fichier.load_actions(MUSIC_FILE)[0]
 # Initialize Qt
 app = QtWidgets.QApplication([])
 the_inspector_dock = QtWidgets.QDockWidget()
-the_inspector_window = inspector1.Inspector(MUSIC_FILE)
+the_inspector_window = inspector.Inspector(MUSIC_FILE)
 the_inspector_dock.setWidget(the_inspector_window)
-print(1)
+
 
 # create the radar view and the time navigation interface
 # ui=color_form.Ui_MainWindow(MUSIC_FILE)
@@ -33,7 +33,7 @@ ui2.setupUi(MainWindow)
 selec = ui2.selec
 selec_join = ui2.selec_join
 selec_join2 = ui2.selec_join2
-View = visu1.View(act,color_forme,selec,selec_join,selec_join2)
+View = visu.View(act,color_forme,selec,selec_join,selec_join2)
 
 
 # create configuration
@@ -45,7 +45,7 @@ win = QtWidgets.QMainWindow()
 win.setWindowTitle("TIMELINE")
 win.setCentralWidget(View)
 the_inspector_dock3 = QtWidgets.QDockWidget()
-the_inspector_window3 = inspector1.Inspector3()
+the_inspector_window3 = inspector.Inspector3()
 the_inspector_dock3.setWidget(the_inspector_window3)
 win.addDockWidget(2, the_inspector_dock3)
 win.addDockWidget(1, the_inspector_dock)

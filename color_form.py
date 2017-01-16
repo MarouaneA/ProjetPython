@@ -70,14 +70,16 @@ class Ui_MainWindow(object):
             self.verticalLayout.addLayout(self.horizontalLayout)
 
 
-        MainWindow.setCentralWidget(self.centralwidget)
+        '''MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 25))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        MainWindow.setStatusBar(self.statusbar)'''
+
+
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -90,9 +92,9 @@ class Ui_MainWindow(object):
             r = k // n  #dicision euclidienne
             self.list_label[k].setText(_translate("MainWindow", self.list_action_differente[k]))
             for i in range(k, n):
-                    self.list_comboBox_colour[k].setItemText(i-k, _translate("MainWindow", COLORS[i%n]))
+                self.list_comboBox_colour[k].setItemText(i-k, _translate("MainWindow", COLORS[i%n]))
             for i in range(k):
-                    self.list_comboBox_colour[k].setItemText(i+n-k, _translate("MainWindow", COLORS[i%n]))
+                self.list_comboBox_colour[k].setItemText(i+n-k, _translate("MainWindow", COLORS[i%n]))
             for j in range(len(FORME)):
                 self.list_comboBox_form[k].setItemText(j, _translate("MainWindow", FORME[j]))
 

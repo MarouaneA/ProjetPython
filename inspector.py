@@ -19,12 +19,11 @@ class Inspector(QWidget):
         # sets up instance variables
         self.ui_Inspector = Ui_MainWindow(fichier)
         self.selec_un = self.ui_Inspector.selec_un
-        print(self.selec_un)
 
         # sets up the widget created with Qt Designer and pyuic
         self.ui_Inspector.setupUi(self)
         self.show()
-        print(2)
+
 class Inspector3(QWidget):
     """ Widget displaying information about a Flight """
 

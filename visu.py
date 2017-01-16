@@ -62,10 +62,9 @@ class View(QtWidgets.QWidget):
                 self.zoom_view((self.valeur+50)/50)
             else :
                 self.zoom_view(1/((self.valeur+50)/50))
-                print(1/((self.valeur+50)/50))
                 self.valeur=slider.value()
                 self.zoom_view((self.valeur+50)/50)
-                print((self.valeur+50)/50)
+
 
 
 
