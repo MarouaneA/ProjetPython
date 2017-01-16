@@ -31,13 +31,13 @@ class View(QtWidgets.QWidget):
 
     @QtCore.pyqtSlot(int)
     def zoom_view(self, value):
-        self.grview.scale(value, 1)
+        self.grview.scale(value, value)
 
     @QtCore.pyqtSlot(QWheelEvent)
     def zoom_view_mouse(self, event):
         self.grview.setTransformationAnchor(self.grview.AnchorUnderMouse)
         factor = math.pow(1.001, event.angleDelta().y())
-        self.grview.scale(factor, 1)
+        self.grview.scale(factor, factor)
 
     def zoom_time(self,value):
         self.draw_timeline(self,value)
@@ -93,6 +93,7 @@ class View(QtWidgets.QWidget):
         self.scene.addItem(timeline_group)
         timeline_group.setZValue(0)
         pen = QtGui.QPen(QtCore.Qt.transparent)
+        pen_black = QtGui.QPen(QtCore.Qt.black)
         pen_grey = QtGui.QPen(QtCore.Qt.gray)
         width = 60
         i = 2
@@ -110,9 +111,14 @@ class View(QtWidgets.QWidget):
                     line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter), timeline_group)
                     label = QtWidgets.QLabel(point.action)
                     label_2 = QtWidgets.QLabel(point.action)
-                    label.setGeometry(-300, 100 * i, 250, 15)
+                    font = QtGui.QFont()
+                    font.setPointSize(30)
+                    label.setFont(font)
+                    label.setFont(font)
+                    label_2.setFont(font)
+                    label.setGeometry(-300, 100 * i,700, 40)
                     self.scene.addWidget(label)
-                    label_2.setGeometry(inter * 8, 100 * i, 250, 15)
+                    label_2.setGeometry(inter * 8, 100 * i, 700, 40)
                     self.scene.addWidget(label_2)
                     if self.color_form[point.action][1] == 'Rectangle':
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
@@ -126,9 +132,14 @@ class View(QtWidgets.QWidget):
                     line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter), timeline_group)
                     label = QtWidgets.QLabel(point.action)
                     label_2 = QtWidgets.QLabel(point.action)
-                    label.setGeometry(-300, 100 * i, 250, 15)
+                    font = QtGui.QFont()
+                    font.setPointSize(30)
+                    label.setFont(font)
+                    label.setFont(font)
+                    label_2.setFont(font)
+                    label.setGeometry(-300, 100 * i, 700, 40)
                     self.scene.addWidget(label)
-                    label_2.setGeometry(inter * 8, 100 * i, 250, 15)
+                    label_2.setGeometry(inter * 8, 100 * i, 700, 40)
                     self.scene.addWidget(label_2)
                     if self.color_form[point.action][1] == 'Rectangle':
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
@@ -142,9 +153,14 @@ class View(QtWidgets.QWidget):
                     line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter),timeline_group)
                     label = QtWidgets.QLabel(point.action)
                     label_2 = QtWidgets.QLabel(point.action)
-                    label.setGeometry(-300,100 * i,250,15)
+                    font = QtGui.QFont()
+                    font.setPointSize(30)
+                    label.setFont(font)
+                    label.setFont(font)
+                    label_2.setFont(font)
+                    label.setGeometry(-800,100 * i,900,40)
                     self.scene.addWidget(label)
-                    label_2.setGeometry(inter * 8, 100 * i, 250, 15)
+                    label_2.setGeometry(inter * 8, 100 * i, 700, 40)
                     self.scene.addWidget(label_2)
                     i+= 1
 
@@ -170,7 +186,7 @@ class View(QtWidgets.QWidget):
                 item.hoverEnterEvent = mouseEnterQGraphics
                 item.hoverLeaveEvent = mouseExitQGraphics
 
-                item.setPen(pen)
+                item.setPen(pen_black)
                 line.setPen(pen_grey)
                 item.setBrush(brush)
                 item.setToolTip(point.action+' '+ point.arg)
