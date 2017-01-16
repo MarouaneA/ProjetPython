@@ -27,7 +27,7 @@ class View(QtWidgets.QWidget):
         self.dep_time = act[0].time
         self.valeur = 0
         self.premier=0
-
+        self.dict_visu = initialisation(act,self.selec)
 
     @QtCore.pyqtSlot(int)
     def zoom_view(self, value):
@@ -64,10 +64,6 @@ class View(QtWidgets.QWidget):
                 self.zoom_view(1/((self.valeur+50)/50))
                 self.valeur=slider.value()
                 self.zoom_view((self.valeur+50)/50)
-
-
-
-
         slider.sliderReleased.connect(lambda: fonction_lambda(self,slider))
         vbox = QtWidgets.QVBoxLayout(self)
         self.grview = QtWidgets.QGraphicsView()
@@ -178,24 +174,31 @@ class View(QtWidgets.QWidget):
                 #Nécessaire pour que le timeline_group.hoverEnterEvent fonctionne
                 item.setAcceptHoverEvents(True)
                 def mouseEnterQGraphics(event, item = item, width = width, xys = xys):
-                  item.setRect(xy_coords(xys, width * 5))
+                  item.setRect(xy_coords_zoom(xys, width))
                 def mouseExitQGraphics(event, item = item, width = width, xys = xys):
                   item.setRect(xy_coords(xys, width))
-
                 item.hoverEnterEvent = mouseEnterQGraphics
                 item.hoverLeaveEvent = mouseExitQGraphics
-
                 item.setPen(pen_black)
                 line.setPen(pen_grey)
                 item.setBrush(brush)
                 item.setToolTip(point.action+' '+ point.arg)
 
-
+def initialisation(act, selec):
+    dict= {}
+    for action in selec:
+        if selec[action] == 'selected':
+            dict[action] = []
+    for point in act:
+        dict[point.action].append(point.time)
+    return dict
 def xy_coords(xy, width):
     dw = width / 3
     return QtCore.QRectF(xy[0] - dw, xy[1]-dw/3, width/3, width/3)
 
-
+def xy_coords_zoom(xy, width):
+    dw = 4*width/5
+    return QtCore.QRectF(xy[0]-dw, xy[1] -dw , 5*width/3, 5*width/3)
 
 
 def xy_line(xy, inter):

@@ -8,8 +8,6 @@ class Point(object):
     def __repr__(self):
         return "{0.action}".format(self)
 
-
-
 def load_actions(fichier):
     ''' liste des Points du fichier 'fichier' , et la liste des actions différentes du fichier '''
     liste_points = []
@@ -23,5 +21,5 @@ def load_actions(fichier):
     for point in liste_points:
         if point.action not in liste_act_diff:
             liste_act_diff.append(point.action)
-
     return liste_points, liste_act_diff
+
