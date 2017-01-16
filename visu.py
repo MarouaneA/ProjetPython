@@ -1,4 +1,4 @@
-__author__ = 'aatefma'
+
 import math
 
 
@@ -19,15 +19,15 @@ class View(QtWidgets.QWidget):
         self.selec= selec
         self.selec_join = selec_join
         self.selec_join2 = selec_join2
+        self.dict_visu  = initialisation(act, self.selec)
         self.grview = None
         self.scene = None
         self.entry = None
         self.build_interface()
-        self.draw_timeline()
         self.dep_time = act[0].time
         self.valeur = 0
         self.premier=0
-        self.dict_visu = initialisation(act,self.selec)
+
 
     @QtCore.pyqtSlot(int)
     def zoom_view(self, value):
@@ -76,6 +76,7 @@ class View(QtWidgets.QWidget):
         vbox.addWidget(self.grview)
         vbox.addWidget(slider)
         self.draw_timeline()
+        #self.draw_timeline_2()
         self.grview.fitInView(self.grview.sceneRect(), QtCore.Qt.KeepAspectRatio)
         add_button('Mise à jour', lambda: self.draw_timeline())
         label_4 = QtWidgets.QLabel()
@@ -170,7 +171,6 @@ class View(QtWidgets.QWidget):
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                     else:
                         item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-
                 #Nécessaire pour que le timeline_group.hoverEnterEvent fonctionne
                 item.setAcceptHoverEvents(True)
                 def mouseEnterQGraphics(event, item = item, width = width, xys = xys):
@@ -184,14 +184,37 @@ class View(QtWidgets.QWidget):
                 item.setBrush(brush)
                 item.setToolTip(point.action+' '+ point.arg)
 
+    def draw_timeline_2(self):
+        """idée d'une autre façon d'éxécuter draw_timeline pour optimiser le dessin, et rendre le visuel meilleur"""
+        self.scene.clear()
+        pen = QtGui.QPen(QtCore.Qt.transparent)
+        pen_black = QtGui.QPen(QtCore.Qt.black)
+        pen_grey = QtGui.QPen(QtCore.Qt.gray)
+        width = 60
+        t_0 = self.action[0].time
+        t_f = self.action[-1].time
+        inter= (t_f - t_0)/2000
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.grview)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 300, 850))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        i = 0
+        for p in self.dict_visu:
+            label = QtWidgets.QLabel(p)
+            self.verticalLayout.addWidget(label)
+
 def initialisation(act, selec):
     dict= {}
     for action in selec:
         if selec[action] == 'selected':
             dict[action] = []
     for point in act:
-        dict[point.action].append(point.time)
+        dict[point.action].append((point.time,point.arg))
     return dict
+
+
 def xy_coords(xy, width):
     dw = width / 3
     return QtCore.QRectF(xy[0] - dw, xy[1]-dw/3, width/3, width/3)
