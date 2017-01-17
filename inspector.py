@@ -10,42 +10,31 @@ from ui_colonnedroite import Ui_MainWindow3
 from color_form import Ui_MainWindow
 
 class Inspector(QWidget):
-    """ Widget displaying information about a Flight """
+    """ Widget  affichant les actions et permettant de choisir la couleur et la forme """
 
     def __init__(self,fichier):
         super(Inspector, self).__init__()
-
-
+        #permet de récupérer les couleurs et les formes dans main
         self.selec_un=0
-        # sets up instance variables
+
+        #crée le widget
         self.ui_Inspector = Ui_MainWindow(fichier)
+
+        #récupère les couleurs et les formes de color_form
         self.selec_un = self.ui_Inspector.selec_un
+
+        #permet de modifier directement le window principal lorsqu'on change la couleur ou la forme dans une combobox
         self.list_comboBox_form = self.ui_Inspector.list_comboBox_form
         self.list_comboBox_colour = self.ui_Inspector.list_comboBox_colour
-        # sets up the widget created with Qt Designer and pyuic
-        self.ui_Inspector.setupUi(self)
-        self.show()
         for k in range (len(self.list_comboBox_colour)):
             self.list_comboBox_colour[k].currentTextChanged.connect(lambda : self.view.draw_timeline())
             self.list_comboBox_form[k].currentTextChanged.connect(lambda : self.view.draw_timeline())
+        # met en place le widget créé avec Qt Designer et pyuic
+        self.ui_Inspector.setupUi(self)
+        self.show()
 
+    #récupère la vue créer dans main pour pouvoir actualiser le window principal avec les combo box
     def setView(self, view):
         self.view=view
 
 
-
-
-class Inspector3(QWidget):
-    """ Widget displaying information about a Flight """
-
-    def __init__(self):
-        super(Inspector3, self).__init__()
-
-        # sets up instance variables
-
-        self.ui_Inspector = Ui_MainWindow3()
-
-        # sets up the widget created with Qt Designer and pyuic
-        self.ui_Inspector.setupUi(self)
-
-        self.show()
