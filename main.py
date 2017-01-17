@@ -9,13 +9,20 @@ import visu
 import inspector
 import color_form
 import configuration
+from PyQt5.QtWidgets import QFileDialog
 
+app = QtWidgets.QApplication([])
+win = QtWidgets.QMainWindow()
+win.setWindowTitle("TIMELINE")
+win.setCentralWidget(QtWidgets.QWidget())
 
-MUSIC_FILE='essai_donnees_2.txt'
+fname = QFileDialog.getOpenFileName(win.centralWidget(), 'Open file', '/home')
+if fname[0]:
+    MUSIC_FILE = fname[0].split('/')[-1]
+
 act= lect_fichier.load_actions(MUSIC_FILE)[0]
 
 # Initialize Qt
-app = QtWidgets.QApplication([])
 the_inspector_dock = QtWidgets.QDockWidget()
 the_inspector_window = inspector.Inspector(MUSIC_FILE)
 the_inspector_dock.setWidget(the_inspector_window)
@@ -36,15 +43,14 @@ selec_join2 = ui2.selec_join2
 View = visu.View(act,color_forme,selec,selec_join,selec_join2)
 
 ui2.setView(View)
-the_inspector_window.setView1(View)
+the_inspector_window.setView(View)
 
 # create configuration
 
 MainWindow.show()
 # FenetreG.show()
 # create the QMainWindow and add both widgets
-win = QtWidgets.QMainWindow()
-win.setWindowTitle("TIMELINE")
+
 win.setCentralWidget(View)
 win.addDockWidget(1, the_inspector_dock)
 #win.addDockWidget(QtCore.Qt.DockWidgetArea(1), the_inspector_dock)

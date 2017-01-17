@@ -69,18 +69,6 @@ class Ui_MainWindow(object):
 
             self.verticalLayout.addLayout(self.horizontalLayout)
 
-
-        '''MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 25))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)'''
-
-
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -98,6 +86,9 @@ class Ui_MainWindow(object):
             for j in range(len(FORME)):
                 self.list_comboBox_form[k].setItemText(j, _translate("MainWindow", FORME[j]))
 
+    '''def setView(self, view):
+        self.view = view'''
+
 
 def initialisation(ui):
     selec_color_form={}
@@ -108,9 +99,13 @@ def initialisation(ui):
 
 def change_colour(ui, state, action):
     ui.selec_un[action][0] = state
+    #ui.view.draw_timeline()
+
 
 def change_form(ui, state, action):
     ui.selec_un[action][1] = state
+    #ui.view.draw_timeline()
+
 
 
 if __name__ == "__main__":

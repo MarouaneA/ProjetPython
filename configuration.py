@@ -13,7 +13,7 @@ class Ui_MainWindow(object):
         self.list_chkbx = []   # liste des Checkbox créées qui contiennent les différentes actions
         self.list_chkbx_join1 = []   # liste 1 des Checkbox créées pour faire des 'join'
         self.list_chkbx_join2 = []   # liste 2 des Checkbox créées pour faire des 'join'
-        self.list_action = lect_fichier.load_actions(fichier)[1]  # liste des actions differentes sous forme de str
+        self.list_action_diff = lect_fichier.load_actions(fichier)[1]  # liste des actions differentes sous forme de str
         self.selec = initialisation(self)
         self.selec_join = initialisation(self)
         self.selec_join2 = initialisation(self)
@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
-        # selection des actions
+        # créer des checkbox pour la selection des actions
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 40, 400, 550))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
         self.label.setObjectName("select")
         self.label.setFont(font)
         self.verticalLayout.addWidget(self.label)
-        for evnt in self.list_action:
+        for evnt in self.list_action_diff:
             chkbx = QtWidgets.QCheckBox(self.verticalLayoutWidget)
             chkbx.setObjectName(evnt)
             chkbx.toggle()  # initialise l'état de la Checkbox à 'sélectionnée'
@@ -46,19 +46,19 @@ class Ui_MainWindow(object):
             chkbx.stateChanged.connect(lambda state=0, evnt=evnt : dict_evnt(self,state,evnt))
             self.list_chkbx.append(chkbx)
             self.verticalLayout.addWidget(chkbx)
+
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.pushButton_save = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton_save.setObjectName("Save Configuration")
+        self.pushButton_save = QtWidgets.QPushButton("Save Configuration", self.horizontalLayoutWidget)
         self.pushButton_save.clicked.connect(lambda : self.save())
         self.horizontalLayout.addWidget(self.pushButton_save)
-        self.pushButton_load = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton_load.setObjectName("Load Configuration")
+        self.pushButton_load = QtWidgets.QPushButton("Load Configuration", self.horizontalLayoutWidget)
         self.pushButton_load.clicked.connect(lambda : self.load())
         self.horizontalLayout.addWidget(self.pushButton_load)
+
         self.verticalLayout.addWidget(self.horizontalLayoutWidget)
 
 
@@ -75,7 +75,7 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName("join")
         self.label_2.setFont(font)
         self.verticalLayout_2.addWidget(self.label_2)
-        for evnt in self.list_action:
+        for evnt in self.list_action_diff:
             chkbx = QtWidgets.QCheckBox(self.verticalLayoutWidget_2)
             chkbx.setObjectName(evnt)
             # state (1er argument) : argument obligatoire de la méthode stateChanged + nécessité de mettre chkbx=chkbx
@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
         self.label_3.setObjectName("join")
         self.label_3.setFont(font)
         self.verticalLayout_3.addWidget(self.label_3)
-        for evnt in self.list_action:
+        for evnt in self.list_action_diff:
             chkbx = QtWidgets.QCheckBox(self.verticalLayoutWidget_3)
             chkbx.setObjectName(evnt)
             # state (1er argument) : argument obligatoire de la méthode stateChanged + nécessité de mettre chkbx=chkbx
@@ -142,8 +142,8 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Select Configuration"))
-        for k in range(len(self.list_action)):
-            self.list_chkbx[k].setText(_translate("MainWindow", self.list_action[k]))
+        for k in range(len(self.list_action_diff)):
+            self.list_chkbx[k].setText(_translate("MainWindow", self.list_action_diff[k]))
         self.pushButton_save.setText(_translate("MainWindow", "Save Configuration"))
         self.pushButton_load.setText(_translate("MainWindow", "Load Configuration"))
         self.pushButton_join.setText(_translate("MainWindow", "Reset"))
@@ -152,66 +152,85 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", 'Join action'))
         self.label_3.setText(_translate("MainWindow", 'Join action'))
 
+    def setView(self, view):
+        self.view = view
 
     def save(self):
-        nom_fichier = input('Nom du fichier de la configuration que vous voulez sauvergarder ?')
-        fic = open(str(nom_fichier), 'w')
-        for evnt in self.list_action:
-            # écrit : 'action  selected/deselected'
-            fic.write(str(evnt)+'    '+self.selec[evnt]+'\n')
-        fic.close()
+        '''sauvegarde une configuration de la sélection d'action dans un fichier txt'''
+        fileName = QtWidgets.QFileDialog.getSaveFileName(self.centralwidget, 'Dialog Title', './')
+        if fileName:
+            nom_fichier = fileName[0].split('/')[-1]
+            fic = open(str(nom_fichier), 'w')
+            for evnt in self.list_action_diff:
+                # écrit : 'action  selected/deselected'
+                fic.write(str(evnt)+'    '+self.selec[evnt]+'\n')
+            fic.close()
 
     def load(self):
-        nom_fichier = input('Nom du fichier de la configuration que vous voulez charger ?')
+        '''importe une configuration de la sélection d'action dans un fichier txt,
+        renvoi une erreur si on essai d'importer une configuration d'un autre fichier'''
+        fname = QtWidgets.QFileDialog.getOpenFileName(self.centralwidget, 'Open file', '/home')
+
         dic = {}
         list_sel, list_unsel = [], []
         k = 0
         pb = 0
-        with open(nom_fichier, 'r') as f:
-            for line in f:
-                list = line.split()
-                if list[0] != self.list_action[k]:
-                    pb = 1 # relève un problème qui signifie que ce n'est pas le bon fichier
-                else :
-                    dic[list[0]] = list[1]
-                    if list[1] == 'selected':
-                        list_sel.append(self.list_chkbx[k]) # liste des checkbox selectionnées
-                    else:
-                        list_unsel.append(self.list_chkbx[k]) # # liste des checkbox déselectionnées
-                k += 1
-        if pb == 0 : # cad pas de problème de fichier
-            # on change l'état des checkbox après la lecture du fichier pour ne pas modifier en cas de problème
-            for chkbx in list_sel :
-                chkbx.setChecked(True)
-            for chkbx in list_unsel :
-                chkbx.setChecked(False)
-            self.selec = dic
-        else :
-            print('Selection no load because it is not the selection of the right file')
+
+        if fname[0]:
+            nom_fichier = fname[0].split('/')[-1]
+            with open(nom_fichier, 'r') as f:
+                for line in f:
+                    list = line.split()
+                    if list[0] != self.list_action_diff[k]:
+                        pb = 1 # relève un problème qui signifie que ce n'est pas le bon fichier
+                    else :
+                        dic[list[0]] = list[1]
+                        if list[1] == 'selected':
+                            list_sel.append(self.list_chkbx[k]) # liste des checkbox selectionnées
+                        else:
+                            list_unsel.append(self.list_chkbx[k]) # # liste des checkbox déselectionnées
+                    k += 1
+            if pb == 0 : # cad pas de problème de fichier
+                # on change l'état des checkbox après la lecture du fichier pour ne pas modifier en cas de problème
+                for chkbx in list_sel :
+                    chkbx.setChecked(True)
+                for chkbx in list_unsel :
+                    chkbx.setChecked(False)
+                self.selec = dic
+            else :
+                print('Selection no load because it is not the selection of the right file')
 
 
 
 def initialisation(ui):
+    '''initialise un dictionnaire qui, à chaque action, renvoi 'selected' '''
     selec={}
-    for action in ui.list_action:
+    for action in ui.list_action_diff:
         selec[action]="selected"
     return selec
 
 
 def dict_evnt(ui, state, evnt):
+    '''change le dictionnaire 'selec_join' des actions , selon 'state',
+    defini : dict[evnt] = selected (= 2) / deselected(= 0)'''
     if state == 0 :
         ui.selec[evnt] = "deselected"
     else :
         ui.selec[evnt] = "selected"
 
+    ui.view.draw_timeline()
+
 
 def dict_join(selec_joini, state, evnt):
+    '''change le dictionnaire 'selec_join' des actions , selon 'state',
+    defini : dict[evnt] = join (= 2) / selected(= 0)'''
     if state == 2 :
         selec_joini[evnt] = 'join'
     else :
         selec_joini[evnt] = 'selected'
 
 def join1(ui):
+    '''Reset l'état des checkbox de la 1ère sélection à déselctionner pour les 'join', enlève les jointures'''
     for k, chkbx in enumerate(ui.list_chkbx_join1):
        if chkbx.checkState() == 2:
             chkbx.setChecked(False)
@@ -219,6 +238,7 @@ def join1(ui):
 
 
 def join2(ui):
+    '''Reset l'état des checkbox de la 2ème sélection à déselctionner pour les 'join', enlève les jointures'''
     for k, chkbx in enumerate(ui.list_chkbx_join2):
        if chkbx.checkState() == 2:
             chkbx.setChecked(False)
