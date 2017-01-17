@@ -16,9 +16,9 @@ win = QtWidgets.QMainWindow()
 win.setWindowTitle("TIMELINE")
 win.setCentralWidget(QtWidgets.QWidget())
 
-fname = QFileDialog.getOpenFileName(win.centralWidget(), 'Open file', '/home')
+fname = QFileDialog.getOpenFileName(win.centralWidget(), 'Open file')
 if fname[0]:
-    MUSIC_FILE = fname[0].split('/')[-1]
+    MUSIC_FILE = fname[0]
 
 act= lect_fichier.load_actions(MUSIC_FILE)[0]
 
@@ -54,7 +54,7 @@ MainWindow.show()
 win.setCentralWidget(View)
 win.addDockWidget(1, the_inspector_dock)
 #win.addDockWidget(QtCore.Qt.DockWidgetArea(1), the_inspector_dock)
-win.adjustSize()
+win.resize(1920,1080)
 win.show()
 # ui2.list_chkbx[1].keyPressEvent(print(25))
 # enter the main loop

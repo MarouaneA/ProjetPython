@@ -60,8 +60,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.pushButton_load)
 
         self.verticalLayout.addWidget(self.horizontalLayoutWidget)
-
-
         # mixe les actions selectionner : join
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(460, 40, 90, 550))

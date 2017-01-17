@@ -1,7 +1,7 @@
 
 import math
-
-
+import datetime
+import time
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QWheelEvent
@@ -16,15 +16,17 @@ class View(QtWidgets.QWidget):
         self.setWindowTitle('Timeline')
         self.action = act
         self.color_form = color_form
+        self.dept_time = self.action[0].time
+        self.final_time = self.action[-1].time
+        self.inter = self.final_time - self.dept_time
         self.selec= selec
         self.selec_join = selec_join
         self.selec_join2 = selec_join2
-        self.dict_visu  = initialisation(act, self.selec)
+        self.dict_visu = initialisation(act, self.selec,self.selec_join,self.selec_join2)
         self.grview = None
         self.scene = None
         self.entry = None
         self.build_interface()
-        self.dep_time = act[0].time
         self.valeur = 0
         self.premier=0
 
@@ -77,7 +79,7 @@ class View(QtWidgets.QWidget):
         vbox.addWidget(slider)
         self.draw_timeline()
         #self.draw_timeline_2()
-        self.grview.fitInView(self.grview.sceneRect(), QtCore.Qt.KeepAspectRatio)
+        self.grview.fitInView(self.grview.sceneRect(),QtCore.Qt.KeepAspectRatio)
         add_button('Mise à jour', lambda: self.draw_timeline())
         label_4 = QtWidgets.QLabel()
         label_4.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -91,11 +93,8 @@ class View(QtWidgets.QWidget):
         pen = QtGui.QPen(QtCore.Qt.transparent)
         pen_black = QtGui.QPen(QtCore.Qt.black)
         pen_grey = QtGui.QPen(QtCore.Qt.gray)
-        width = 60
+        width = 40
         i = 2
-        t_0 = self.action[0].time
-        t_f = self.action[-1].time
-        inter= (t_f - t_0)/2000
         dict={}
         for point in self.action:
             if self.selec[point.action] == 'selected':
@@ -103,8 +102,8 @@ class View(QtWidgets.QWidget):
                     dict[point.action] = 0
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
                     y = 100 * dict[point.action]
-                    xys = ((point.time - t_0) / inter), y
-                    line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter), timeline_group)
+                    xys = ((point.time - self.dept_time) / (self.final_time - self.dept_time))*2000, y
+                    line = QtWidgets.QGraphicsRectItem(xy_line(xys, self.inter), timeline_group)
                     label = QtWidgets.QLabel(point.action)
                     label_2 = QtWidgets.QLabel(point.action)
                     font = QtGui.QFont()
@@ -112,9 +111,9 @@ class View(QtWidgets.QWidget):
                     label.setFont(font)
                     label.setFont(font)
                     label_2.setFont(font)
-                    label.setGeometry(-300, 100 * i,700, 40)
+                    label.setGeometry(-300, 100 * i,400, 40)
                     self.scene.addWidget(label)
-                    label_2.setGeometry(inter * 8, 100 * i, 700, 40)
+                    label_2.setGeometry(2050, 100 * i, 400, 40)
                     self.scene.addWidget(label_2)
                     if self.color_form[point.action][1] == 'Rectangle':
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
@@ -124,18 +123,13 @@ class View(QtWidgets.QWidget):
                     dict[point.action] = 1
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
                     y = 100 * dict[point.action]
-                    xys = ((point.time - t_0) / inter), y
-                    line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter), timeline_group)
+                    xys = ((point.time - self.dept_time) / self.inter)*2000, y
+                    line = QtWidgets.QGraphicsRectItem(xy_line(xys, self.inter), timeline_group)
                     label = QtWidgets.QLabel(point.action)
                     label_2 = QtWidgets.QLabel(point.action)
-                    font = QtGui.QFont()
-                    font.setPointSize(30)
-                    label.setFont(font)
-                    label.setFont(font)
-                    label_2.setFont(font)
-                    label.setGeometry(-300, 100 * i, 700, 40)
+                    label.setGeometry(-300, 100 * i, 700, 10)
                     self.scene.addWidget(label)
-                    label_2.setGeometry(inter * 8, 100 * i, 700, 40)
+                    label_2.setGeometry(2050, 100 * i, 700, 10)
                     self.scene.addWidget(label_2)
                     if self.color_form[point.action][1] == 'Rectangle':
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
@@ -145,8 +139,8 @@ class View(QtWidgets.QWidget):
                     dict[point.action] = i
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
                     y = 100 * dict[point.action]
-                    xys = ((point.time - t_0) / inter), y
-                    line = QtWidgets.QGraphicsRectItem(xy_line(xys, inter),timeline_group)
+                    xys = (point.time - self.dept_time) / (self.final_time - self.dept_time)*2000, y
+                    line = QtWidgets.QGraphicsRectItem(xy_line(xys, self.inter),timeline_group)
                     label = QtWidgets.QLabel(point.action)
                     label_2 = QtWidgets.QLabel(point.action)
                     font = QtGui.QFont()
@@ -154,9 +148,9 @@ class View(QtWidgets.QWidget):
                     label.setFont(font)
                     label.setFont(font)
                     label_2.setFont(font)
-                    label.setGeometry(-800,100 * i,900,40)
+                    label.setGeometry(-700,100 * i,650,40)
                     self.scene.addWidget(label)
-                    label_2.setGeometry(inter * 8, 100 * i, 700, 40)
+                    label_2.setGeometry(2050, 100 * i, 700, 40)
                     self.scene.addWidget(label_2)
                     i+= 1
 
@@ -166,7 +160,7 @@ class View(QtWidgets.QWidget):
                         item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
                 else:
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
-                    xys = ((point.time - t_0) / inter), 100 * dict[point.action]
+                    xys = (point.time - self.dept_time) / (self.final_time - self.dept_time)*2000, 100 * dict[point.action]
                     if self.color_form[point.action][1] == 'Rectangle':
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                     else:
@@ -182,47 +176,84 @@ class View(QtWidgets.QWidget):
                 item.setPen(pen_black)
                 line.setPen(pen_grey)
                 item.setBrush(brush)
-                item.setToolTip(point.action+' '+ point.arg)
+                item.setToolTip(point.action+' '+ point.arg+' '+datetime.datetime.fromtimestamp(point.time/1000).strftime('%Y/%m/%d %H:%M:%S'))
 
     def draw_timeline_2(self):
-        """idée d'une autre façon d'éxécuter draw_timeline pour optimiser le dessin, et rendre le visuel meilleur"""
         self.scene.clear()
-        pen = QtGui.QPen(QtCore.Qt.transparent)
+        timeline_group = QtWidgets.QGraphicsRectItem()
+        self.scene.addItem(timeline_group)
+        y = 0
+        for line in self.dict_visu:
+            obj = Line(line,self.dict_visu[line],y,self.dept_time,self.final_time,self.color_form)
+            obj.draw_line(timeline_group)
+            y += 80
+
+
+
+class Line(object):
+    def __init__(self,name,list_time_args,y, dept_time, final_time,color_form):
+        self.name = name
+        self.list_time_args = list_time_args
+        self.y = y
+        self.dept_time = dept_time
+        self.final_time = final_time
+        self.inter = self.final_time - self.dept_time
+        self.color_form = color_form
+
+    def draw_line(self,group):
         pen_black = QtGui.QPen(QtCore.Qt.black)
         pen_grey = QtGui.QPen(QtCore.Qt.gray)
+        if self.name != 'selec_join' and self.name != 'selec_join_2':
+            brush = QtGui.QBrush(QtGui.QColor(self.color_form[self.name][0]))
+        label = QtWidgets.QLabel(self.name)
+        font = QtGui.QFont()
+        font.setPointSize(30)
+        label.setGeometry(0,self.y ,900,40)
+        line = QtWidgets.QGraphicsRectItem(QtCore.QRectF(0,self.y, 2000, 1), group)
+        line.setPen(pen_grey)
         width = 60
-        t_0 = self.action[0].time
-        t_f = self.action[-1].time
-        inter= (t_f - t_0)/2000
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.grview)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 300, 850))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        i = 0
-        for p in self.dict_visu:
-            label = QtWidgets.QLabel(p)
-            self.verticalLayout.addWidget(label)
+        for point in self.list_time_args:
+            xys = ((point[0] - self.dept_time)/self.inter)*2000, self.y
+            if self.color_form[self.name][1] == 'Rectangle':
+                item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), group)
+            else:
+                item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), group)
+            item.setPen(pen_black)
+            item.setBrush(brush)
+            item.setToolTip(self.name + ' ' + point[1] + ' ' + datetime.datetime.fromtimestamp(point[0]/ 1000).strftime('%Y/%m/%d %H:%M:%S'))
+            def mouseEnterQGraphics(event, item=item, width=width, xys=xys):
+                item.setRect(xy_coords_zoom(xys, width))
+            def mouseExitQGraphics(event, item=item, width=width, xys=xys):
+                item.setRect(xy_coords(xys, width))
+            item.hoverEnterEvent = mouseEnterQGraphics
+            item.hoverLeaveEvent = mouseExitQGraphics
 
-def initialisation(act, selec):
+def initialisation(act, selec, selec_join, selec_join_2):
     dict= {}
     for action in selec:
         if selec[action] == 'selected':
             dict[action] = []
     for point in act:
         dict[point.action].append((point.time,point.arg))
+    for point in selec_join:
+        dict['selec_join'] = []
+        if selec_join[point] == 'join':
+            dict[selec_join] += dict[point]
+    for point in selec_join_2:
+        dict['selec_join_2'] = []
+        if selec_join_2[point] == 'join':
+            dict[selec_join_2] += dict[point]
     return dict
 
 
 def xy_coords(xy, width):
-    dw = width / 3
-    return QtCore.QRectF(xy[0] - dw, xy[1]-dw/3, width/3, width/3)
+    dw = width/2
+    return QtCore.QRectF(xy[0] - dw, xy[1]- dw , width, width)
 
 def xy_coords_zoom(xy, width):
-    dw = 4*width/5
-    return QtCore.QRectF(xy[0]-dw, xy[1] -dw , 5*width/3, 5*width/3)
+    dw = width
+    return QtCore.QRectF(xy[0]-dw, xy[1] -dw , 2*width, 2*width)
 
 
 def xy_line(xy, inter):
-    return QtCore.QRectF(-50 , xy[1], (inter*8)+50, 1)
+    return QtCore.QRectF(-50 , xy[1], 2050, 1)

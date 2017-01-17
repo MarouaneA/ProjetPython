@@ -6,7 +6,6 @@ __author__ = 'veronhu'
 """
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QWidget, QListWidgetItem
-from ui_colonnedroite import Ui_MainWindow3
 from color_form import Ui_MainWindow
 
 class Inspector(QWidget):
@@ -26,12 +25,14 @@ class Inspector(QWidget):
         #permet de modifier directement le window principal lorsqu'on change la couleur ou la forme dans une combobox
         self.list_comboBox_form = self.ui_Inspector.list_comboBox_form
         self.list_comboBox_colour = self.ui_Inspector.list_comboBox_colour
-        for k in range (len(self.list_comboBox_colour)):
-            self.list_comboBox_colour[k].currentTextChanged.connect(lambda : self.view.draw_timeline())
-            self.list_comboBox_form[k].currentTextChanged.connect(lambda : self.view.draw_timeline())
         # met en place le widget créé avec Qt Designer et pyuic
         self.ui_Inspector.setupUi(self)
         self.show()
+        for k in range (len(self.list_comboBox_colour)):
+            self.list_comboBox_colour[k].currentTextChanged.connect(lambda : self.view.draw_timeline())
+            self.list_comboBox_form[k].currentTextChanged.connect(lambda : self.view.draw_timeline())
+
+
 
     #récupère la vue créer dans main pour pouvoir actualiser le window principal avec les combo box
     def setView(self, view):
