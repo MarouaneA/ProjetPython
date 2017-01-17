@@ -16,9 +16,9 @@ FICHIER = 'essai_donnees.txt'
 class Ui_MainWindow(object):
 
     def __init__(self, fichier):
-        #self.action = lect_fichierbiss.load_actions(fichier)[0]
-        self.list_action_differente = lect_fichier.load_actions(fichier)[1]  # liste des actions differentes sous forme de str
 
+        # liste des actions differentes sous forme de str
+        self.list_action_differente = lect_fichier.load_actions(fichier)[1]
         self.list_label = []
         self.list_comboBox_form = []
         self.list_comboBox_colour = []
@@ -39,16 +39,17 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         font = QtGui.QFont()
         font.setPointSize(9)
+
         for action in self.list_action_differente:
             self.horizontalLayout = QtWidgets.QHBoxLayout()
             self.horizontalLayout.setObjectName("horizontalLayout"+action)
-        #text label
+        #création text label pour 'action'
             self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
             self.label.setObjectName("label"+action)
             self.label.setFont(font)
             self.list_label.append(self.label)
             self.horizontalLayout.addWidget(self.label)
-        #combobox couleur
+        #création combobox couleur pour 'action'
             self.comboBox_colour = QtWidgets.QComboBox(self.verticalLayoutWidget)
             self.comboBox_colour.setObjectName("comboBox_colour"+action)
             for k in range(len(COLORS)):
@@ -57,7 +58,7 @@ class Ui_MainWindow(object):
             self.comboBox_colour.currentTextChanged.connect(lambda state, action=action : change_colour(self, state, action))
             self.horizontalLayout.addWidget(self.comboBox_colour)
             self.list_comboBox_colour.append(self.comboBox_colour)
-        #combobox forme
+        #création combobox forme pour 'action'
             self.comboBox_form = QtWidgets.QComboBox(self.verticalLayoutWidget)
             self.comboBox_form.setObjectName("comboBox_form"+action)
             for k in range(len(FORME)):
@@ -77,7 +78,6 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Choix des couleurs et des formes"))
         for k in range(len(self.list_action_differente)):
             n = len(COLORS)
-            r = k // n  #dicision euclidienne
             self.list_label[k].setText(_translate("MainWindow", self.list_action_differente[k]))
             for i in range(k, n):
                 self.list_comboBox_colour[k].setItemText(i-k, _translate("MainWindow", COLORS[i%n]))
@@ -86,11 +86,8 @@ class Ui_MainWindow(object):
             for j in range(len(FORME)):
                 self.list_comboBox_form[k].setItemText(j, _translate("MainWindow", FORME[j]))
 
-    '''def setView(self, view):
-        self.view = view'''
-
-
 def initialisation(ui):
+    '''initialise un dictionnaire qui, à chaque action, renvoie [sa couleur associée, sa forme associée]'''
     selec_color_form={}
     n = len(COLORS)
     for k, action in enumerate(ui.list_action_differente):
@@ -98,14 +95,12 @@ def initialisation(ui):
     return selec_color_form
 
 def change_colour(ui, state, action):
+    '''change la couleur (= state) de l'action dans le dictionnaire selec_un'''
     ui.selec_un[action][0] = state
-    #ui.view.draw_timeline()
-
 
 def change_form(ui, state, action):
+    '''change la forme (= state) de l'action dans le dictionnaire selec_un'''
     ui.selec_un[action][1] = state
-    #ui.view.draw_timeline()
-
 
 
 if __name__ == "__main__":
