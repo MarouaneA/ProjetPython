@@ -28,7 +28,8 @@ class Inspector(QWidget):
         for k in range (len(self.list_comboBox_colour)):
             self.list_comboBox_colour[k].currentTextChanged.connect(lambda : self.view.draw_timeline())
             self.list_comboBox_form[k].currentTextChanged.connect(lambda : self.view.draw_timeline())
-    def setView1(self, view):
+
+    def setView(self, view):
         self.view=view
 
 
