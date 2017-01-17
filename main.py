@@ -35,6 +35,8 @@ selec_join = ui2.selec_join
 selec_join2 = ui2.selec_join2
 View = visu.View(act,color_forme,selec,selec_join,selec_join2)
 
+ui2.setView(View)
+the_inspector_window.setView1(View)
 
 # create configuration
 
