@@ -78,7 +78,7 @@ class Ui_MainWindow(object):
             chkbx.setObjectName(evnt)
             # state (1er argument) : argument obligatoire de la méthode stateChanged + nécessité de mettre chkbx=chkbx
             # sinon la fonction n'évalue que le dernier de la boucle 'for' ( il faut définir des variables indépendantes)
-            chkbx.stateChanged.connect(lambda state=0, evnt=evnt : dict_join(self.selec_join ,state,evnt))
+            chkbx.stateChanged.connect(lambda state=0, evnt=evnt : dict_join(self,self.selec_join ,state,evnt))
             self.list_chkbx_join1.append(chkbx)
             self.verticalLayout_2.addWidget(chkbx)
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -110,7 +110,7 @@ class Ui_MainWindow(object):
             chkbx.setObjectName(evnt)
             # state (1er argument) : argument obligatoire de la méthode stateChanged + nécessité de mettre chkbx=chkbx
             # sinon la fonction n'évalue que le dernier de la boucle 'for' ( il faut définir des variables indépendantes)
-            chkbx.stateChanged.connect(lambda state=0, evnt=evnt: dict_join(self.selec_join2, state, evnt))
+            chkbx.stateChanged.connect(lambda state=0, evnt=evnt: dict_join(self, self.selec_join2, state, evnt))
             self.list_chkbx_join2.append(chkbx)
             self.verticalLayout_3.addWidget(chkbx)
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -219,20 +219,22 @@ def dict_evnt(ui, state, evnt):
     ui.view.draw_timeline()
 
 
-def dict_join(selec_joini, state, evnt):
+def dict_join(ui,selec_joini, state, evnt):
     '''change le dictionnaire 'selec_join' des actions , selon 'state',
     defini : dict[evnt] = join (= 2) / selected(= 0)'''
     if state == 2 :
         selec_joini[evnt] = 'join'
     else :
         selec_joini[evnt] = 'selected'
+    ui.view.draw_timeline()
 
 def join1(ui):
     '''Reset l'état des checkbox de la 1ère sélection à déselctionner pour les 'join', enlève les jointures'''
     for k, chkbx in enumerate(ui.list_chkbx_join1):
        if chkbx.checkState() == 2:
             chkbx.setChecked(False)
-            ui.selec_join[ui.list_action[k]] = "selected"
+            # si on a besoin de récupérer l'état des checkbox(première version)
+            # ui.selec_join[ui.list_action_diff[k]] = "selected"
 
 
 def join2(ui):
@@ -240,7 +242,8 @@ def join2(ui):
     for k, chkbx in enumerate(ui.list_chkbx_join2):
        if chkbx.checkState() == 2:
             chkbx.setChecked(False)
-            ui.selec_join2[ui.list_action[k]] = "selected"
+            # si on a besoin de récupérer l'état des checkbox(première version)
+            # ui.selec_join2[ui.list_action_diff[k]] = "selected"
 
 
 if __name__ == "__main__":

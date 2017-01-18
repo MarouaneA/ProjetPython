@@ -6,7 +6,6 @@ __author__ = 'veronhu'
 """
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QWidget, QListWidgetItem
-from ui_colonnedroite import Ui_MainWindow3
 from color_form import Ui_MainWindow
 
 class Inspector(QWidget):

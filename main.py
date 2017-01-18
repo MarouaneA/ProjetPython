@@ -11,52 +11,62 @@ import color_form
 import configuration
 from PyQt5.QtWidgets import QFileDialog
 
+
+#initialises Qt
 app = QtWidgets.QApplication([])
 win = QtWidgets.QMainWindow()
 win.setWindowTitle("TIMELINE")
 win.setCentralWidget(QtWidgets.QWidget())
 
+#permet de choisir le fichier de travail à ouvrir
 fname = QFileDialog.getOpenFileName(win.centralWidget(), 'Open file')
 if fname[0]:
     MUSIC_FILE = fname[0]
 
-act= lect_fichier.load_actions(MUSIC_FILE)[0]
+#variable globale
+# act= lect_fichier.load_actions(MUSIC_FILE)[0]
 
-# Initialize Qt
+#créer le color_form par le biais de l'inspecteur
 the_inspector_dock = QtWidgets.QDockWidget()
 the_inspector_window = inspector.Inspector(MUSIC_FILE)
 the_inspector_dock.setWidget(the_inspector_window)
 
+#récupère la liste des couleurs et des formes pour créer la vue(variable globale)
+# color_form = the_inspector_window.selec_un
 
-# create the radar view and the time navigation interface
-# ui=color_form.Ui_MainWindow(MUSIC_FILE)
-# FenetreG=QtWidgets.QMainWindow()
-# ui.setupUi(FenetreG)
-color_forme = the_inspector_window.selec_un
-ui2 = configuration.Ui_MainWindow(MUSIC_FILE)
+
+
+config_mainWindow= configuration.Ui_MainWindow(MUSIC_FILE)
 MainWindow = QtWidgets.QMainWindow()
+# met en place le widget créé avec Qt Designer et pyuic
+config_mainWindow.setupUi(MainWindow)
 
-ui2.setupUi(MainWindow)
-selec = ui2.selec
-selec_join = ui2.selec_join
-selec_join2 = ui2.selec_join2
-View = visu.View(act,color_forme,selec,selec_join,selec_join2)
+#récupère les listes des checkbox pour créer la vue(varialbe globale)
+# dict_state_chekbx = config_mainWindow.selec
+# dict_state_joinchkbx1 = config_mainWindow.selec_join
+# dict_state_joinchkbx2 = config_mainWindow.selec_join2
 
-ui2.setView(View)
+#créé la vue
+View = visu.View(lect_fichier.load_actions(MUSIC_FILE)[0],the_inspector_window.selec_un,config_mainWindow.selec,config_mainWindow.selec_join,config_mainWindow.selec_join2)
+
+
+config_mainWindow.setView(View)
 the_inspector_window.setView(View)
 
-# create configuration
-
+#affiche la fenetre configuration
 MainWindow.show()
-# FenetreG.show()
-# create the QMainWindow and add both widgets
 
+# met en place fenetre principale
 win.setCentralWidget(View)
+
+#ajoute color_form par le biais d'inspector à la fenetre principale
 win.addDockWidget(1, the_inspector_dock)
-#win.addDockWidget(QtCore.Qt.DockWidgetArea(1), the_inspector_dock)
+
+#affiche la fenetre principale
 win.resize(1920,1080)
 win.show()
-# ui2.list_chkbx[1].keyPressEvent(print(25))
+
+
 # enter the main loop
 result = app.exec_()
 

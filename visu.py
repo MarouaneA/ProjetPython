@@ -29,6 +29,7 @@ class View(QtWidgets.QWidget):
         self.build_interface()
         self.valeur = 0
         self.premier=0
+        self.valeur_souris=1
 
 
     @QtCore.pyqtSlot(int)
@@ -40,11 +41,17 @@ class View(QtWidgets.QWidget):
         self.grview.setTransformationAnchor(self.grview.AnchorUnderMouse)
         factor = math.pow(1.001, event.angleDelta().y())
         self.grview.scale(factor, factor)
+        self.valeur_souris=self.valeur_souris*factor
 
-    def zoom_time(self,value):
-        self.draw_timeline(self,value)
+    #jamais utilisée
+    # def zoom_time(self,value):
+    #     self.draw_timeline(self,value)
 
-
+    #créé la fonction appellée par le bouton reset_zoom
+    def reset_zoom(self):
+        self.zoom_view(1/self.valeur_souris)
+        self.valeur_souris=1
+        self.draw_timeline()
 
     def build_interface(self):
         def add_button(text, slot):
@@ -52,10 +59,14 @@ class View(QtWidgets.QWidget):
             button = QtWidgets.QPushButton(text)
             button.clicked.connect(slot)
             vbox.addWidget(button)
+
+        # créé un slider
         slider = QtWidgets.QSlider()
         slider.setGeometry(QtCore.QRect(0, 0, 50, 800))
         slider.setOrientation(QtCore.Qt.Horizontal)
         slider.setObjectName("verticalScrollBar")
+
+        # on créé la fonction lambda à laquelle on va connecter le slider
         def fonction_lambda(self,slider):
             if self.valeur ==0 and self.premier == 0 :
                 self.valeur=slider.value()
@@ -66,7 +77,10 @@ class View(QtWidgets.QWidget):
                 self.zoom_view(1/((self.valeur+50)/50))
                 self.valeur=slider.value()
                 self.zoom_view((self.valeur+50)/50)
+
+        # on connecte le slider à la fonction lambda
         slider.sliderReleased.connect(lambda: fonction_lambda(self,slider))
+
         vbox = QtWidgets.QVBoxLayout(self)
         self.grview = QtWidgets.QGraphicsView()
         self.scene = QtWidgets.QGraphicsScene()
@@ -76,11 +90,17 @@ class View(QtWidgets.QWidget):
         self.grview.wheelEvent = lambda event: self.zoom_view_mouse(event)
         self.grview.scale(1, 1)
         vbox.addWidget(self.grview)
+
+        #on ajoute le slider au window
         vbox.addWidget(slider)
+
+        #dessine la timeline
         self.draw_timeline()
-        #self.draw_timeline_2()
         self.grview.fitInView(self.grview.sceneRect(),QtCore.Qt.KeepAspectRatio)
-        add_button('Mise à jour', lambda: self.draw_timeline())
+
+        # remet le zoom de la souris à la valeur initiale
+        add_button('reset_zoom', lambda: self.reset_zoom())
+
         label_4 = QtWidgets.QLabel()
         label_4.setFrameShape(QtWidgets.QFrame.NoFrame)
         label_4.setObjectName("label_4")
