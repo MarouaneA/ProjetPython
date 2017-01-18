@@ -13,8 +13,6 @@ class Inspector(QWidget):
 
     def __init__(self,fichier):
         super(Inspector, self).__init__()
-        #permet de récupérer les couleurs et les formes dans main
-        self.selec_un=0
 
         #crée le widget
         self.ui_Inspector = Ui_MainWindow(fichier)
