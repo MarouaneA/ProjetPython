@@ -19,7 +19,7 @@ win.setWindowTitle("TIMELINE")
 win.setCentralWidget(QtWidgets.QWidget())
 
 #permet de choisir le fichier de travail à ouvrir
-fname = QFileDialog.getOpenFileName(win.centralWidget(), 'Open file')
+fname = QFileDialog.getOpenFileName(win.centralWidget(), 'Open file','SamplesLog/')
 if fname[0]:
     MUSIC_FILE = fname[0]
 
@@ -53,8 +53,7 @@ View = visu.View(lect_fichier.load_actions(MUSIC_FILE)[0],the_inspector_window.s
 config_mainWindow.setView(View)
 the_inspector_window.setView(View)
 
-#affiche la fenetre configuration
-MainWindow.show()
+
 
 # met en place fenetre principale
 win.setCentralWidget(View)
@@ -66,6 +65,8 @@ win.addDockWidget(1, the_inspector_dock)
 win.resize(1920,1080)
 win.show()
 
+#affiche la fenetre configuration
+MainWindow.show()
 
 # enter the main loop
 result = app.exec_()
