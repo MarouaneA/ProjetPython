@@ -118,52 +118,49 @@ class View(QtWidgets.QWidget):
         width = 40
         i = 2
         dict={}
-
+        line_0 = QtWidgets.QGraphicsRectItem(xy_line((0, 0)), timeline_group)
+        line_1 = QtWidgets.QGraphicsRectItem(xy_line((0, 100)), timeline_group)
+        line_0.setPen(pen_grey)
+        line_1.setPen(pen_grey)
+        join_label_1 = QtWidgets.QLabel('Join action 1')
+        join_label_2 = QtWidgets.QLabel('Join action 2')
+        font = QtGui.QFont()
+        font.setPointSize(50)
+        join_label_1.setStyleSheet('QLabel{background-color:white;color:black;}')
+        join_label_1.setFont(font)
+        join_label_2.setFont(font)
+        join_label_2.setStyleSheet('QLabel{background-color:white;color:black;}')
+        join_label_1.setGeometry(-1000, - 30, 950, 40)
+        self.scene.addWidget(join_label_1)
+        join_label_2.setGeometry(-1000, 70, 950, 40)
+        self.scene.addWidget(join_label_2)
         #dessin de la timeline:
         for point in self.action:
             if self.selec[point.action] == 'selected':
-
                 #création de la première ligne correspondant aux actions jointes
                 if self.selec_join[point.action] == 'join':
                     dict[point.action] = 0
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
                     y = 100 * dict[point.action]
                     xys = ((point.time - self.dept_time) / (self.final_time - self.dept_time))*2000, y
-                    line = QtWidgets.QGraphicsRectItem(xy_line(xys), timeline_group)
-                    label = QtWidgets.QLabel(point.action)
-                    label_2 = QtWidgets.QLabel(point.action)
-                    font = QtGui.QFont()
-                    font.setPointSize(30)
-                    label.setFont(font)
-                    label_2.setFont(font)
-                    label.setGeometry(-300, 100 * i,400, 40)
-                    self.scene.addWidget(label)
-                    label_2.setGeometry(2050, 100 * i, 400, 40)
-                    self.scene.addWidget(label_2)
                     if self.color_form[point.action][1] == 'Rectangle':
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                     else:
                         item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-
                 # création de la deuxième ligne correspondant aux actions jointes
+
                 elif self.selec_join2[point.action] == 'join':
                     dict[point.action] = 1
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))
                     y = 100 * dict[point.action]
                     xys = ((point.time - self.dept_time) / self.inter)*2000, y
-                    line = QtWidgets.QGraphicsRectItem(xy_line(xys), timeline_group)
-                    label = QtWidgets.QLabel(point.action)
-                    label_2 = QtWidgets.QLabel(point.action)
-                    label.setGeometry(-300, 100 * i, 700, 10)
-                    self.scene.addWidget(label)
-                    label_2.setGeometry(2050, 100 * i, 700, 10)
-                    self.scene.addWidget(label_2)
+
                     if self.color_form[point.action][1] == 'Rectangle':
                         item = QtWidgets.QGraphicsRectItem(xy_coords(xys, width), timeline_group)
                     else:
                         item = QtWidgets.QGraphicsEllipseItem(xy_coords(xys, width), timeline_group)
-
                 # création d'une nouvelle ligne, dans le cas où l'action n'a toujours pas été représentée
+
                 elif point.action not in dict:
                     dict[point.action] = i
                     brush = QtGui.QBrush(QtGui.QColor(self.color_form[point.action][0]))

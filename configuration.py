@@ -26,7 +26,7 @@ class Config(object):
 
         # créer des checkbox pour la selection des actions
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 40, 400, 550))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 40, 300, 550))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -62,13 +62,11 @@ class Config(object):
         self.verticalLayout.addWidget(self.horizontalLayoutWidget)
         # mixe les actions selectionner : join
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(460, 40, 90, 550))
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(360, 40, 90, 550))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout")
-        font = QtGui.QFont()
-        font.setPointSize(9)
         self.label_2 = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.label_2.setObjectName("join")
         self.label_2.setFont(font)
@@ -94,13 +92,11 @@ class Config(object):
 
         # autre : mixe les actions selectionner : join
         self.verticalLayoutWidget_3 = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(570, 40, 90, 550))
+        self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(470, 40, 90, 550))
         self.verticalLayoutWidget_3.setObjectName("verticalLayoutWidget_3")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setObjectName("verticalLayout3")
-        font = QtGui.QFont()
-        font.setPointSize(9)
         self.label_3 = QtWidgets.QLabel(self.verticalLayoutWidget_3)
         self.label_3.setObjectName("join")
         self.label_3.setFont(font)
@@ -142,6 +138,8 @@ class Config(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Select Configuration"))
         for k in range(len(self.list_action_diff)):
             self.list_chkbx[k].setText(_translate("MainWindow", self.list_action_diff[k]))
+            self.list_chkbx_join1[k].setText(_translate("MainWindow", str(k+1)))
+            self.list_chkbx_join2[k].setText(_translate("MainWindow", str(k+1)))
         self.pushButton_save.setText(_translate("MainWindow", "Save Configuration"))
         self.pushButton_load.setText(_translate("MainWindow", "Load Configuration"))
         self.pushButton_join.setText(_translate("MainWindow", "Reset"))
