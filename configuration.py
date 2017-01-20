@@ -7,7 +7,7 @@ FICHIER_2 = "essai_donnees_2.txt"
 
 
 
-class Ui_MainWindow(object):
+class Config(object):
 
     def __init__(self, fichier):
         self.list_chkbx = []   # liste des Checkbox créées qui contiennent les différentes actions
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     fichier = FICHIER
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui2 = Ui_MainWindow(fichier)
+    ui2 = Config(fichier)
     ui2.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

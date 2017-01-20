@@ -36,7 +36,7 @@ the_inspector_dock.setWidget(the_inspector_window)
 
 
 
-config_mainWindow= configuration.Ui_MainWindow(MUSIC_FILE)
+config_mainWindow= configuration.Config(MUSIC_FILE)
 MainWindow = QtWidgets.QMainWindow()
 # met en place le widget créé avec Qt Designer et pyuic
 config_mainWindow.setupUi(MainWindow)
