@@ -1,7 +1,7 @@
 
 import math
 import datetime
-import time
+
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QWheelEvent

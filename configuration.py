@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
-import lect_fichier
+import load_file
 
 FICHIER = "essai_donnees.txt"
 FICHIER_2 = "essai_donnees_2.txt"
@@ -13,7 +13,7 @@ class Config(object):
         self.list_chkbx = []   # liste des Checkbox créées qui contiennent les différentes actions
         self.list_chkbx_join1 = []   # liste 1 des Checkbox créées pour faire des 'join'
         self.list_chkbx_join2 = []   # liste 2 des Checkbox créées pour faire des 'join'
-        self.list_action_diff = lect_fichier.load_actions(fichier)[1]  # liste des actions differentes sous forme de str
+        self.list_action_diff = load_file.load_actions(fichier)[1]  # liste des actions differentes sous forme de str
         self.selec = initialisation(self)
         self.selec_join = initialisation(self)
         self.selec_join2 = initialisation(self)

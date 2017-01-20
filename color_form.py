@@ -1,7 +1,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
-import lect_fichier
+import load_file
 
 
 COLORS = ['red', 'orange', 'blue', 'green', 'magenta', 'cyan', 'lime', 'purple', 'silver', 'indigo', 'maroon',
@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
     def __init__(self, fichier):
 
         # liste des actions differentes sous forme de str
-        self.list_action_differente = lect_fichier.load_actions(fichier)[1]
+        self.list_action_differente = load_file.load_actions(fichier)[1]
         self.list_label = []
         self.list_comboBox_form = []
         self.list_comboBox_colour = []
