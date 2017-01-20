@@ -88,7 +88,7 @@ class Config(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.pushButton_join = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.pushButton_join.setObjectName("buttonjoin")
-        self.pushButton_join.clicked.connect(lambda : join1(self))
+        self.pushButton_join.clicked.connect(lambda : reset_join1(self))
         self.horizontalLayout.addWidget(self.pushButton_join)
         self.verticalLayout_2.addWidget(self.horizontalLayoutWidget)
 
@@ -120,7 +120,7 @@ class Config(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.pushButton_join2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.pushButton_join2.setObjectName("buttonjoin")
-        self.pushButton_join2.clicked.connect(lambda : join2(self))
+        self.pushButton_join2.clicked.connect(lambda : reset_join2(self))
         self.horizontalLayout.addWidget(self.pushButton_join2)
         self.verticalLayout_3.addWidget(self.horizontalLayoutWidget)
 
@@ -228,7 +228,7 @@ def dict_join(ui,selec_joini, state, evnt):
         selec_joini[evnt] = 'selected'
     ui.view.draw_timeline()
 
-def join1(ui):
+def reset_join1(ui):
     '''Reset l'état des checkbox de la 1ère sélection à déselctionner pour les 'join', enlève les jointures'''
     for k, chkbx in enumerate(ui.list_chkbx_join1):
        if chkbx.checkState() == 2:
@@ -237,7 +237,7 @@ def join1(ui):
             # ui.selec_join[ui.list_action_diff[k]] = "selected"
 
 
-def join2(ui):
+def reset_join2(ui):
     '''Reset l'état des checkbox de la 2ème sélection à déselctionner pour les 'join', enlève les jointures'''
     for k, chkbx in enumerate(ui.list_chkbx_join2):
        if chkbx.checkState() == 2:
